@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'wines',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -121,3 +122,16 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+LOGIN_REDIRECT_URL = 'dashboard'  # Redirects to the dashboard view
+LOGOUT_REDIRECT_URL = '/'  # Redirect to the landing page (or 'login' if you'd prefer the login page)
+
+# Session Engine (default is 'django.contrib.sessions.backends.db', but adding it explicitly)
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+# Session duration setting: Sets the session to expire in 1 day (86400 seconds)
+SESSION_COOKIE_AGE = 86400  # Session lasts 1 day
+

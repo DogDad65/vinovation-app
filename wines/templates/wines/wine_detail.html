@@ -1,0 +1,12 @@
+{% extends 'wines/base.html' %}
+
+{% block title %}Wine Detail{% endblock %}
+
+{% block content %}
+    <h1>{{ wine_batch.lot_name }}</h1>
+    <p><strong>Grape Variety:</strong> {{ wine_batch.grape_variety }}</p>
+    <p><strong>Volume:</strong> {{ wine_batch.volume }}</p>
+    <p><strong>Status:</strong> {{ wine_batch.status }}</p>
+    
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+{% endblock %}

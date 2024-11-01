@@ -1,0 +1,20 @@
+{% extends 'wines/base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Welcome to your Wine Dashboard, {{ user.username }}!</h1>
+    <h2>Your Wine Batches</h2>
+
+    <!-- Link to Create New Wine Batch -->
+    <a href="{% url 'create_wine' %}">Add a New Wine Batch</a>
+
+    <ul>
+        {% for wine in wine_batches %}
+            <li>{{ wine.lot_name }} - {{ wine.grape_variety }} ({{ wine.status }})</li>
+        {% empty %}
+            <li>You don't have any wine batches yet.</li>
+        {% endfor %}
+    </ul>
+    
+{% endblock %}

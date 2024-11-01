@@ -1,0 +1,26 @@
+<!-- wines/templates/wines/base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Vinovation{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'dashboard' %}">Dashboard</a> |
+            <a href="{% url 'profile' %}">Profile</a> |
+            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" style="background:none; border:none; color:blue; text-decoration:underline; cursor:pointer;">Logout</button>
+            </form>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        <!-- Content from other pages will be injected here -->
+        {% endblock %}
+    </main>
+</body>
+</html>
