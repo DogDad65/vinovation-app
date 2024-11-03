@@ -1,0 +1,18 @@
+<h1>Your Wine Batches</h1>
+<p>Logged in as: {{ request.user.username }}</p>
+
+{% if wine_batches %}
+<ul>
+    {% for wine_batch in wine_batches %}
+        <li>
+            {{ wine_batch.lot_name }} - 
+            <a href="{% url 'wine_detail' wine_batch.id %}">View Details</a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% else %}
+    <p>No wine batches found.</p>
+{% endif %}
+
+<a href="{% url 'create_wine' %}">Create New Wine Batch</a>

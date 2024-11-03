@@ -1,26 +1,38 @@
-<!-- wines/templates/wines/base.html -->
+<!-- base.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Vinovation{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="{% url 'dashboard' %}">Dashboard</a> |
-            <a href="{% url 'profile' %}">Profile</a> |
-            <form action="{% url 'logout' %}" method="post" style="display: inline;">
-                {% csrf_token %}
-                <button type="submit" style="background:none; border:none; color:blue; text-decoration:underline; cursor:pointer;">Logout</button>
-            </form>
-        </nav>
-    </header>
+    {% if request.resolver_match.url_name != 'landing' %}
+        <div class="sidebar">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'create_wine' %}">Create Wine Batch</a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <li>
+                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" style="background:none; border:none; color:white; cursor:pointer; text-align:left;">Logout</button>
+                        </form>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    {% endif %}
 
-    <main>
-        {% block content %}
-        <!-- Content from other pages will be injected here -->
-        {% endblock %}
-    </main>
+    <div class="container">
+        <main class="content">
+            {% block content %}
+            <!-- Content from other pages will be injected here -->
+            {% endblock %}
+        </main>
+    </div>
 </body>
 </html>

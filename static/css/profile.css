@@ -1,0 +1,31 @@
+/* profile.css */
+
+h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.profile-info {
+    background: #f7f7f7;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.profile-info p {
+    font-size: 1em;
+    color: #666;
+}
+
+.actions {
+    margin-top: 20px;
+}
+
+.actions a {
+    color: #007bff;
+    margin-right: 15px;
+}
+
+.actions a:hover {
+    text-decoration: underline;
+}

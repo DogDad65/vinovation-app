@@ -1,0 +1,52 @@
+/* dashboard.css */
+
+h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+h2 {
+    font-size: 1.5em;
+    color: #555;
+}
+
+a {
+    color: #007bff; /* Primary link color */
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background: #f9f9f9;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+ul li a {
+    margin-left: 10px;
+}
+
+ul li a:first-of-type {
+    color: #28a745; /* View link color */
+}
+
+ul li a:nth-of-type(2) {
+    color: #ffc107; /* Edit link color */
+}
+
+ul li a:last-of-type {
+    color: #dc3545; /* Delete link color */
+}

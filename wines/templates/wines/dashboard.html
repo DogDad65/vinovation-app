@@ -1,20 +1,29 @@
-{% extends 'wines/base.html' %}
+<!-- wines/templates/wines/dashboard.html -->
+{% extends 'wines/base.html' %} 
+{% load static %}
 
 {% block title %}Dashboard{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
 {% block content %}
-    <h1>Welcome to your Wine Dashboard, {{ user.username }}!</h1>
-    <h2>Your Wine Batches</h2>
+<h1>Welcome to your Wine Dashboard, {{ user.username }}!</h1>
+<h2>Your Wine Batches</h2>
 
-    <!-- Link to Create New Wine Batch -->
-    <a href="{% url 'create_wine' %}">Add a New Wine Batch</a>
+<a href="{% url 'create_wine' %}">Add a New Wine Batch</a>
 
-    <ul>
-        {% for wine in wine_batches %}
-            <li>{{ wine.lot_name }} - {{ wine.grape_variety }} ({{ wine.status }})</li>
-        {% empty %}
-            <li>You don't have any wine batches yet.</li>
-        {% endfor %}
-    </ul>
-    
+<ul>
+  {% for wine in wine_batches %} 
+  <li>
+    {{ wine.lot_name }} - {{ wine.get_grape_variety_display }} ({{ wine.get_status_display }})
+    <a href="{% url 'wine_detail' wine.id %}">View</a> |
+    <a href="{% url 'edit_wine' wine.id %}">Edit</a> |
+    <a href="{% url 'delete_wine' wine.id %}">Delete</a>
+  </li>
+  {% empty %}
+  <li>You don't have any wine batches yet.</li>
+  {% endfor %}
+</ul>
 {% endblock %}

@@ -1,0 +1,12 @@
+<!-- analysis_form.html -->
+{% extends 'wines/base.html' %}
+{% block title %}{{ 'Edit' if is_edit else 'Add' }} Analysis{% endblock %}
+
+{% block content %}
+<h1>{{ 'Edit' if is_edit else 'Add' }} Analysis</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{{ 'Update' if is_edit else 'Add' }} Analysis</button>
+</form>
+{% endblock %}

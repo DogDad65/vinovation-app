@@ -1,12 +1,13 @@
+<!-- wines/templates/wines/wine_detail.html -->
 {% extends 'wines/base.html' %}
 
-{% block title %}Wine Detail{% endblock %}
+{% block title %}Wine Batch Detail{% endblock %}
 
 {% block content %}
-    <h1>{{ wine_batch.lot_name }}</h1>
-    <p><strong>Grape Variety:</strong> {{ wine_batch.grape_variety }}</p>
-    <p><strong>Volume:</strong> {{ wine_batch.volume }}</p>
-    <p><strong>Status:</strong> {{ wine_batch.status }}</p>
-    
-    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+<h1>{{ wine_batch.lot_name }} - {{ wine_batch.get_grape_variety_display }}</h1>
+<p>Status: {{ wine_batch.get_status_display }}</p>
+<p>Volume: {{ wine_batch.volume }}</p>
+<p>Date Created: {{ wine_batch.date_created }}</p>
+
+<a href="{% url 'dashboard' %}">Back to Dashboard</a>
 {% endblock %}

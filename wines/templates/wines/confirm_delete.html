@@ -1,0 +1,13 @@
+<!-- confirm_delete.html -->
+{% extends 'wines/base.html' %}
+{% block title %}Confirm Delete{% endblock %}
+
+{% block content %}
+<h1>Are you sure you want to delete this {{ object_type.replace('_', ' ') }}?</h1>
+<p>{{ object }}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, Delete</button>
+    <a href="{% url 'wine_detail' wine_batch.id %}">Cancel</a>
+</form>
+{% endblock %}
