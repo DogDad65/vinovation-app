@@ -1,46 +1,46 @@
-{% extends "wines/base.html" %}
+{% extends 'wines/base.html' %}
 
 {% block title %}Vessels{% endblock %}
 
 {% block content %}
-<h1>Vessels</h1>
-<a href="{% url 'create_vessel' %}" class="btn btn-primary">Add New Vessel</a>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Capacity (L)</th>
-            <th>Material</th>
-            <th>Stored Batches</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for vessel in vessels %}
-        <tr>
-            <td>{{ vessel.name }}</td>
-            <td>{{ vessel.capacity }}</td>
-            <td>{{ vessel.material }}</td>
-            <td>
-                <ul>
-                    {% for batch in vessel.wine_batches.all %}
-                        <li>{{ batch.lot_name }} - {{ batch.volume }}L</li>
-                    {% empty %}
-                        <li>No wine batches stored</li>
-                    {% endfor %}
-                </ul>
-            </td>
-            <td>
-                <a href="{% url 'vessel_detail' vessel.id %}" class="btn btn-info">View</a>
-                <a href="{% url 'edit_vessel' vessel.id %}" class="btn btn-warning">Edit</a>
-                <form action="{% url 'delete_vessel' vessel.id %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Delete</button>
-                </form>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="vessel-container">
+    <h1 class="vessel-header">Vessels</h1>
+    <a href="{% url 'create_vessel' %}" class="vessel-add-link">Add New Vessel</a>
+    <table class="vessel-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Capacity (L)</th>
+                <th>Material</th>
+                <th>Stored Batches</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for vessel in vessels %}
+                <tr>
+                    <td>{{ vessel.name }}</td>
+                    <td>{{ vessel.capacity }}</td>
+                    <td>{{ vessel.material }}</td>
+                    <td>
+                        {% if vessel.batches.exists %}
+                            <ul>
+                                {% for batch in vessel.batches.all %}
+                                    <li>{{ batch.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <span class="no-batch-text">No wine batches stored</span>
+                        {% endif %}
+                    </td>
+                    <td class="action-buttons">
+                        <a href="{% url 'vessel_detail' vessel.id %}" class="view-button">View</a>
+                        <a href="{% url 'edit_vessel' vessel.id %}" class="edit-button">Edit</a>
+                        <a href="{% url 'delete_vessel' vessel.id %}" class="delete-button">Delete</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
 {% endblock %}

@@ -1,60 +1,88 @@
 <!-- base.html -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>{% block title %}Vinovation{% endblock %}</title>
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-    <script src="{% static 'js/dashboard.js' %}"></script>
 
-</head>
-<body>
+    <!-- Link to your main CSS files -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/wine_detail.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/vessel_list.css' %}">
+    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <!-- JavaScript file for additional interactivity if required -->
+    <script src="{% static 'js/dashboard.js' %}"></script>
+  </head>
+
+  <body>
     {% if request.resolver_match.url_name != 'landing' %}
+    <!-- Sidebar Navigation -->
     <div class="sidebar">
-        <ul class="sidebar-nav">
-            <li>
-                <a href="{% url 'dashboard' %}">
-                    <i class="fas fa-tachometer-alt"></i> Dashboard
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'create_wine' %}">
-                    <i class="fas fa-wine-bottle"></i> Create Wine Batch
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'wine_list' %}">
-                    <i class="fas fa-bottle"></i> Analysis
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'vessel_list' %}">
-                    <i class="fas fa-flask"></i> Vessel
-                </a>
-            </li>
-            <li>
-                <form action="{% url 'logout' %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" style="background:none; border:none; color:inherit; padding:0; cursor:pointer;">
-                        <i class="fas fa-sign-out-alt"></i> Logout
-                    </button>
-                </form>
-            </li>
-        </ul>
+      <ul class="sidebar-nav">
+        <li>
+          <a href="{% url 'dashboard' %}">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'create_wine' %}">
+            <i class="fas fa-wine-bottle"></i> Create Wine Batch
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'wine_list' %}">
+            <i class="fas fa-bottle"></i> Analysis
+          </a>
+        </li>
+        <li>
+          <a href="{% url 'vessel_list' %}">
+            <i class="fas fa-flask"></i> Vessel
+          </a>
+        </li>
+        <li>
+          <!-- Logout form styled to look like a link with icon -->
+          <form
+            action="{% url 'logout' %}"
+            method="post"
+            style="display: inline"
+          >
+            {% csrf_token %}
+            <button
+              type="submit"
+              style="
+                background: none;
+                border: none;
+                color: inherit;
+                padding: 0;
+                cursor: pointer;
+              "
+            >
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+          </form>
+        </li>
+      </ul>
     </div>
-    
     {% endif %}
 
+    <!-- Main container and content area -->
     <div class="container">
-        <main class="content">
-            {% block content %}
-            <!-- Content from other pages will be injected here -->
-            {% endblock %}
-        </main>
+      <main class="content">
+        {% block content %}
+        <!-- Content from other pages will be injected here -->
+        {% endblock %}
+      </main>
     </div>
-</body>
+  </body>
 </html>

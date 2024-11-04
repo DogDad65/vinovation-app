@@ -1,18 +1,40 @@
-<h1>Your Wine Batches</h1>
-<p>Logged in as: {{ request.user.username }}</p>
+{% extends 'wines/base.html' %}
 
-{% if wine_batches %}
-<ul>
-    {% for wine_batch in wine_batches %}
-        <li>
-            {{ wine_batch.lot_name }} - 
-            <a href="{% url 'wine_detail' wine_batch.id %}">View Details</a>
-        </li>
-    {% endfor %}
-</ul>
+{% block title %}Your Wine Batches{% endblock %}
 
-{% else %}
-    <p>No wine batches found.</p>
-{% endif %}
+{% block content %}
+<div class="wine-container">
+    <h1 class="wine-header">Your Wine Batches</h1>
+    <p>Logged in as: {{ user.username }}</p>
+    <a href="{% url 'create_wine' %}" class="wine-add-link">Create New Wine Batch</a>
 
-<a href="{% url 'create_wine' %}">Create New Wine Batch</a>
+    <table class="wine-table">
+        <thead>
+            <tr>
+                <th>Batch Name</th>
+                <th>Vintage</th>
+                <th>Variety</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for batch in wine_batches %}
+                <tr>
+                    <td>{{ batch.name }}</td>
+                    <td>{{ batch.vintage }}</td>
+                    <td>{{ batch.variety }}</td>
+                    <td>
+                        <a href="{% url 'wine_detail' batch.id %}" class="view-button">View</a>
+                        <a href="{% url 'edit_wine' batch.id %}" class="edit-button">Edit</a>
+                        <a href="{% url 'delete_wine' batch.id %}" class="delete-button">Delete</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="4">No wine batches available.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

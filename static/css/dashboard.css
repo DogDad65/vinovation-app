@@ -1,133 +1,49 @@
-/* General Dashboard Styles */
-h1 {
-    font-size: 2em;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
-}
+/* dashboard.css */
 
-.hidden {
-    display: none;
-}
-
-.tab.active {
-    font-weight: bold;
-    border-bottom: 2px solid blue; /* Adjust as needed for styling */
-}
-
-
-/* Wine Category Section */
-.wine-category {
-    margin-bottom: 40px;
-}
-
-.wine-cards {
+.dashboard-columns {
     display: flex;
-    flex-direction: column;
     gap: 20px;
+    justify-content: center;
+    padding: 20px;
 }
 
-/* Card Styling */
-.card {
-    border: 1px solid #ddd;
+.wine-column {
+    flex: 1;
+    padding: 20px;
     border-radius: 8px;
-    padding: 16px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-    margin-bottom: 16px;
 }
 
-.card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ddd;
-    padding-bottom: 8px;
-    margin-bottom: 16px;
+.red-column {
+    background-color: #fbe3e3; /* Light red/pink background for red wines */
+    color: #8b0000; /* Dark red text color */
 }
 
-.card-header h3 {
-    font-size: 1.5em;
-    margin: 0;
+.white-column {
+    background-color: #f9f9e6; /* Light yellow/beige background for white wines */
+    color: #555; /* Dark gray text color */
 }
 
-.menu-button {
-    background: none;
-    border: none;
-    font-size: 1.2em;
-    cursor: pointer;
-    color: #666;
+.wine-column h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
 }
 
-/* Tabs Styling */
-.tabs {
-    display: flex;
-    gap: 10px;
-    border-bottom: 1px solid #ddd;
-    margin-bottom: 16px;
+.wine-column ul {
+    list-style-type: none;
+    padding: 0;
 }
 
-.tab {
-    padding: 8px 16px;
-    border: none;
-    background-color: #f4f4f4;
-    cursor: pointer;
-    border-radius: 4px 4px 0 0;
-    font-size: 1em;
+.wine-column li {
+    margin: 10px 0;
+    font-size: 16px;
 }
 
-.tab.active {
-    background-color: #fff;
-    border-bottom: 2px solid #007bff;
-    color: #007bff;
-}
-
-.tab-content.hidden {
-    display: none;
-}
-
-/* Tab Content Styling */
-.tab-content {
-    padding: 10px;
-}
-
-.tab-content p {
-    margin: 8px 0;
-}
-
-/* Button Styles */
-.btn {
-    background-color: #007bff;
-    color: #fff;
-    padding: 8px 12px;
-    border-radius: 4px;
+.wine-column a {
+    color: #8b0000;
     text-decoration: none;
-    font-size: 0.9em;
-    display: inline-block;
-    margin-top: 10px;
 }
 
-.btn:hover {
-    background-color: #0056b3;
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
-    .card {
-        padding: 12px;
-    }
-
-    .card-header h3 {
-        font-size: 1.2em;
-    }
-
-    .tab {
-        padding: 6px 12px;
-        font-size: 0.9em;
-    }
-
-    .btn {
-        padding: 6px 10px;
-        font-size: 0.8em;
-    }
+.wine-column a:hover {
+    text-decoration: underline;
 }

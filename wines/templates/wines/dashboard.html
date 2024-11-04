@@ -1,50 +1,42 @@
-{% extends "wines/base.html" %}
-{% load static %}
-
-<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<!-- dashboard.html -->
+{% extends 'wines/base.html' %}
 
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
 <h1>Dashboard</h1>
 
-<!-- Red Wines Section -->
-<div class="wine-category">
-    <h2>Red Wines</h2>
-    {% if red_wines %}
-    <div class="wine-cards">
-        {% for wine in red_wines %}
-            <div class="card">
-                <div class="card-header">
-                    <h3>{{ wine.lot_name }}</h3>
-                    <button class="menu-button">⋮</button>
-                </div>
-                <div class="tabs">
-                    <button class="tab active" onclick="showTab(event, 'info-{{ wine.id }}')">Info</button>
-                    <button class="tab" onclick="showTab(event, 'history-{{ wine.id }}')">History</button>
-                    <button class="tab" onclick="showTab(event, 'tasks-{{ wine.id }}')">Tasks</button>
-                </div>
-                <div class="tab-content" id="info-{{ wine.id }}">
-                    <p><strong>Variety:</strong> {{ wine.get_grape_variety_display }}</p>
-                    <p><strong>Volume:</strong> {{ wine.volume }} L</p>
-                    <p><strong>Status:</strong> {{ wine.status }}</p>
-                    <a href="{% url 'wine_detail' wine.id %}" class="btn">View Details</a>
-                </div>
-                <div class="tab-content hidden" id="history-{{ wine.id }}">
-                    <p><strong>Created on:</strong> {{ wine.date_created }}</p>
-                </div>
-                <div class="tab-content hidden" id="tasks-{{ wine.id }}">
-                    <p>No tasks available</p>
-                </div>
-            </div>
-        {% endfor %}
+<div class="dashboard-columns">
+    <div class="wine-column red-column">
+        <h2>Red Wines</h2>
+        {% if red_wines %}
+            <ul>
+                {% for wine in red_wines %}
+                    <li>
+                        <strong>{{ wine.vintage }} {{ wine.lot_name }} - {{ wine.get_grape_variety_display }}</strong>
+                        - <a href="{% url 'wine_detail' wine.id %}">View Details</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No Red wines found.</p>
+        {% endif %}
     </div>
-{% else %}
-    <p>No red wines available.</p>
-{% endif %}
 
+    <div class="wine-column white-column">
+        <h2>White Wines</h2>
+        {% if white_wines %}
+            <ul>
+                {% for wine in white_wines %}
+                    <li>
+                        <strong>{{ wine.vintage }} {{ wine.lot_name }} - {{ wine.get_grape_variety_display }}</strong>
+                        - <a href="{% url 'wine_detail' wine.id %}">View Details</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No White wines found.</p>
+        {% endif %}
+    </div>
 </div>
-
-<!-- Repeat similar structure for White Wines and Bottled Wines -->
-<script src="{% static 'wines/js/dashboard.js' %}"></script>
 {% endblock %}

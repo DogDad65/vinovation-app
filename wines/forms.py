@@ -1,12 +1,20 @@
 # wines/forms.py
 from django import forms
 from .models import WineBatch
-from .models import Analysis, Vessel
+from .models import Analysis, Vessel, WINE_CATEGORIES
 
 class WineBatchForm(forms.ModelForm):
     class Meta:
         model = WineBatch
-        fields = ['lot_name', 'grape_variety', 'volume', 'status']
+        fields = ['lot_name', 'grape_variety', 'volume', 'status', 'category', 'vessel']
+        widgets = {
+            'category': forms.Select(choices=WINE_CATEGORIES),
+        }
+        
+class WineForm(forms.ModelForm):
+    class Meta:
+        model = WineBatch
+        fields = ['lot_name', 'category', 'grape_variety', 'volume', 'vineyard', 'ava', 'vessel'] 
         
 class AnalysisForm(forms.ModelForm):
     class Meta:

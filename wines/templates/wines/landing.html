@@ -1,2 +1,22 @@
-<h1>Welcome to Vinovation</h1>
-<a href="{% url 'login' %}">Login</a> | <a href="{% url 'signup' %}">Signup</a>
+<!-- wines/templates/wines/landing.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Vinovation</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/landing.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="auth-box">
+            <h2>Welcome to Vinovation</h2>
+            <p>Please log in or sign up to get started.</p>
+            <div class="button-group">
+                <a href="{% url 'login' %}" class="btn">Log In</a>
+                <a href="{% url 'signup' %}" class="btn">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

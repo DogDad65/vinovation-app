@@ -23,40 +23,53 @@ h1, h2 {
     position: fixed;
     left: 0;
     top: 0;
-    width: 200px; /* Adjust width as needed */
+    width: 220px; /* Adjust width to match the margin in .container */
     height: 100%;
     background-color: #333;
     color: white;
     padding-top: 20px;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* Content layout to offset for sidebar */
-.content {
-    margin-left: 200px; /* Matches the sidebar width */
-    padding: 20px;
-}
-
-
-.sidebar nav ul {
+/* Sidebar navigation */
+.sidebar ul {
     list-style-type: none;
     padding: 0;
     margin: 0;
+    width: 100%;
 }
 
-.sidebar nav ul li {
-    padding: 10px 20px;
+.sidebar li {
+    width: 100%;
 }
 
-.sidebar nav ul li a {
+.sidebar a {
     color: white;
     text-decoration: none;
-    display: block;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease;
 }
 
-.sidebar nav ul li a:hover {
+.sidebar a i {
+    margin-right: 10px;
+}
+
+.sidebar a:hover {
     background-color: #444;
-    text-decoration: underline;
+    text-decoration: none;
+}
+
+/* Active link styling (optional: add active class to the current page link) */
+.sidebar a.active {
+    background-color: #555;
+    font-weight: bold;
 }
 
 /* Button styles */
@@ -76,11 +89,23 @@ button:hover, .button:hover {
 
 /* Content area within each page */
 .content {
-    max-width: 100%;
     padding: 20px;
+    max-width: 100%;
 }
 
-/* Logout button styles */
+/* Card styles for dashboard wine categories */
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: left;
+    width: 100%;
+    max-width: 600px;
+}
+
+/* Logout button */
 .logout-button {
     background: none;
     border: none;
@@ -92,6 +117,10 @@ button:hover, .button:hover {
     text-decoration: none;
 }
 
+.logout-button:hover {
+    color: #ff4b4b;
+}
+
 /* Utility classes for spacing and layout adjustments */
 .mt-20 {
     margin-top: 20px;
@@ -99,4 +128,28 @@ button:hover, .button:hover {
 
 .mb-20 {
     margin-bottom: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        margin-left: 0;
+        max-width: 100%;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        padding-top: 0;
+    }
+    .content {
+        margin-left: 0;
+    }
+    .sidebar ul {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    .sidebar a {
+        padding: 10px;
+    }
 }

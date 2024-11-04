@@ -1,0 +1,14 @@
+{% extends 'wines/base.html' %}
+
+{% block title %}Delete Analysis{% endblock %}
+
+{% block content %}
+<div class="delete-container">
+    <h2>Are you sure you want to delete this analysis?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="delete-button">Confirm Delete</button>
+        <a href="{% url 'wine_detail' analysis.wine_batch.pk %}" class="cancel-button">Cancel</a>
+    </form>
+</div>
+{% endblock %}

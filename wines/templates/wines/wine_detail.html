@@ -1,6 +1,56 @@
-<h2>{{ wine_batch.lot_name }}</h2>
-<p>Category: {{ wine_batch.category }}</p>
-<p>Variety: {{ wine_batch.grape_variety }}</p>
-<p>Volume: {{ wine_batch.volume }}</p>
-<a href="{% url 'add_analysis' wine_batch.id %}">Add Analysis</a> |
-<a href="{% url 'transfer_to_vessel' wine_batch.id %}">Transfer to Vessel</a>
+<!-- wine_detail.html -->
+{% extends 'wines/base.html' %}
+
+
+
+{% block title %}Wine Details{% endblock %}
+
+{% block content %}
+<div class="wine-detail">
+    <h1>{{ wine.lot_name }}</h1>
+    <p><strong>Category:</strong> {{ wine.get_category_display }}</p>
+    <p><strong>Variety:</strong> {{ wine.get_grape_variety_display }}</p>
+    <p><strong>Volume:</strong> {{ wine.volume }} L</p>
+    <p><strong>Vineyard:</strong> {{ wine.vineyard }}</p>
+    <p><strong>AVA:</strong> {{ wine.ava }}</p>
+    <p><strong>Vessel #:</strong> {% if wine.vessel %}{{ wine.vessel.name }}{% else %}N/A{% endif %}</p>
+
+    <!-- Edit and Delete Buttons -->
+    <div class="actions">
+        <a href="{% url 'edit_wine' wine.pk %}" class="edit-button">Edit Wine</a>
+        <form action="{% url 'delete_wine' wine.pk %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="delete-button">Delete Wine</button>
+        </form>
+    </div>
+
+    <!-- Analyses Section -->
+    <h2>Analyses</h2>
+    <a href="{% url 'add_analysis' wine.pk %}" class="add-button">Add New Analysis</a>
+    {% if analyses %}
+    <div class="analyses-list">
+        {% for analysis in analyses %}
+            <div class="card">
+                <p><strong>Date:</strong> {{ analysis.date }}</p>
+                <p><strong>pH:</strong> {{ analysis.ph }}</p>
+                <p><strong>TA:</strong> {{ analysis.ta }}</p>
+                <p><strong>VA:</strong> {{ analysis.va }}</p>
+                <p><strong>SO₂:</strong> {{ analysis.so2 }}</p>
+                <p><strong>Brix:</strong> {{ analysis.brix|default:"N/A" }}</p>
+                <p><strong>Alcohol (%):</strong> {{ analysis.alcohol|default:"N/A" }}</p>
+                <div class="form-actions">
+                    <a href="{% url 'edit_analysis' analysis.pk %}" class="btn btn-primary">Edit</a>
+                    <form action="{% url 'delete_analysis' analysis.pk %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delete</button>
+                    </form>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No analyses available for this wine.</p>
+{% endif %}
+
+</div>
+{% endblock %}

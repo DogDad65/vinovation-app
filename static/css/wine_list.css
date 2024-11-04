@@ -1,0 +1,68 @@
+.wine-container {
+    margin: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wine-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.wine-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.wine-table th,
+.wine-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.wine-table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.wine-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.wine-add-link {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-decoration: none;
+}
+
+.view-button, .edit-button, .delete-button {
+    padding: 5px 10px;
+    margin: 0 3px;
+    border-radius: 3px;
+    text-decoration: none;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.view-button {
+    background-color: #5bc0de;
+}
+
+.edit-button {
+    background-color: #f0ad4e;
+}
+
+.delete-button {
+    background-color: #d9534f;
+}

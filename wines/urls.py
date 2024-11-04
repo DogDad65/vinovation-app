@@ -21,8 +21,12 @@ wine_patterns = [
     # Wine URLs
     path('wine/create/', views.create_wine, name='create_wine'),
     path('wines/', views.wine_list, name='wine_list'),
-    path('wine/<int:wine_id>/', views.wine_detail, name='wine_detail'),
+    path('wine/<int:pk>/', views.wine_detail, name='wine_detail'),
     path('wine/<int:wine_id>/add-analysis/', views.add_analysis, name='add_analysis'),
+    path('wine/<int:pk>/edit/', views.edit_wine, name='edit_wine'),
+    path('wine/<int:pk>/delete/', views.delete_wine, name='delete_wine'),
+    path('analysis/<int:analysis_id>/edit/', views.edit_analysis, name='edit_analysis'),
+    path('analysis/<int:analysis_id>/delete/', views.delete_analysis, name='delete_analysis'),
     path('wine/<int:wine_id>/transfer/', views.transfer_to_vessel, name='transfer_to_vessel'),
     
     # Vessel URLs

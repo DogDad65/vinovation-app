@@ -1,0 +1,14 @@
+{% extends 'wines/base.html' %}
+
+{% block title %}Edit Analysis{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Edit Analysis</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="save-button">Update Analysis</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,6 +1,47 @@
-<h2>Add Analysis</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save Analysis</button>
-</form>
+<!-- analysis_form.html -->
+{% extends 'wines/base.html' %}
+
+{% block title %}Add Analysis{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2 class="form-title">Add Analysis</h2>
+    <form method="post" class="analysis-form">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="ph">PH</label>
+            {{ form.ph }}
+        </div>
+
+        <div class="form-group">
+            <label for="ta">TA</label>
+            {{ form.ta }}
+        </div>
+
+        <div class="form-group">
+            <label for="va">VA</label>
+            {{ form.va }}
+        </div>
+
+        <div class="form-group">
+            <label for="so2">SO₂</label>
+            {{ form.so2 }}
+        </div>
+
+        <div class="form-group">
+            <label for="brix">Brix</label>
+            {{ form.brix }}
+        </div>
+
+        <div class="form-group">
+            <label for="alcohol">Alcohol (%)</label>
+            {{ form.alcohol }}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="save-button">Save Analysis</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
