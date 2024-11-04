@@ -1,0 +1,46 @@
+{% extends "wines/base.html" %}
+
+{% block title %}Vessels{% endblock %}
+
+{% block content %}
+<h1>Vessels</h1>
+<a href="{% url 'create_vessel' %}" class="btn btn-primary">Add New Vessel</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Capacity (L)</th>
+            <th>Material</th>
+            <th>Stored Batches</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for vessel in vessels %}
+        <tr>
+            <td>{{ vessel.name }}</td>
+            <td>{{ vessel.capacity }}</td>
+            <td>{{ vessel.material }}</td>
+            <td>
+                <ul>
+                    {% for batch in vessel.wine_batches.all %}
+                        <li>{{ batch.lot_name }} - {{ batch.volume }}L</li>
+                    {% empty %}
+                        <li>No wine batches stored</li>
+                    {% endfor %}
+                </ul>
+            </td>
+            <td>
+                <a href="{% url 'vessel_detail' vessel.id %}" class="btn btn-info">View</a>
+                <a href="{% url 'edit_vessel' vessel.id %}" class="btn btn-warning">Edit</a>
+                <form action="{% url 'delete_vessel' vessel.id %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

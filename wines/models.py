@@ -11,7 +11,6 @@ GRAPE_VARIETIES = (
     ('RS', 'Riesling'),
     ('CF', 'Cabernet Franc'),
     ('PV', 'Petit Verdot'),
-    # Add other varieties as needed
 )
 
 WINE_STATUS = (
@@ -20,23 +19,30 @@ WINE_STATUS = (
     ('bottling', 'Bottling'),
 )
 
+VESSEL_TYPES = (
+    ('tank', 'Tank'),
+    ('barrel', 'Barrel'),
+)
+
+class Vessel(models.Model):
+    name = models.CharField(max_length=100)
+    capacity = models.IntegerField(help_text="Capacity in liters")
+    type = models.CharField(max_length=10, choices=VESSEL_TYPES, default='tank')  # Default set to 'tank'
+    material = models.CharField(max_length=50, blank=True, null=True)  # e.g., stainless steel, oak
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="vessels")
+
+    def __str__(self):
+        return f"{self.name} - {self.type.capitalize()} - {self.capacity}L"
+
+
 class WineBatch(models.Model):
     lot_name = models.CharField(max_length=100)
-    grape_variety = models.CharField(
-        max_length=2,
-        choices=GRAPE_VARIETIES
-    )
+    grape_variety = models.CharField(max_length=2, choices=GRAPE_VARIETIES)
     volume = models.FloatField()
-    status = models.CharField(
-        max_length=20,
-        choices=WINE_STATUS,
-        default='fermentation'
-    )
+    status = models.CharField(max_length=20, choices=WINE_STATUS, default='fermentation')
     date_created = models.DateField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='wine_batches')
-
-    class Meta:
-        unique_together = ('user', 'lot_name')
+    vessel = models.ForeignKey(Vessel, on_delete=models.SET_NULL, null=True, blank=True, related_name='wine_batches')
 
     def __str__(self):
         return f"{self.lot_name} ({self.get_grape_variety_display()})"
@@ -53,21 +59,10 @@ class Analysis(models.Model):
     alcohol = models.FloatField(verbose_name="Alcohol (%)", null=True, blank=True)
 
     def clean(self):
-        """
-        Custom validation to ensure only one of Brix or Alcohol is filled.
-        """
         if self.brix and self.alcohol:
             raise ValidationError("Only one of Brix or Alcohol should be provided, not both.")
         elif not self.brix and not self.alcohol:
             raise ValidationError("Either Brix or Alcohol must be provided.")
-
-    def save(self, *args, **kwargs):
-        # Call the custom clean method on save to enforce validation
-        self.clean()
-        super().save(*args, **kwargs)
-
-    class Meta:
-        verbose_name_plural = "Analyses"
 
     def __str__(self):
         return f"Analysis on {self.date} for {self.wine_batch}"

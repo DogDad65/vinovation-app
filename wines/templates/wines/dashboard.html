@@ -1,29 +1,50 @@
-<!-- wines/templates/wines/dashboard.html -->
-{% extends 'wines/base.html' %} 
+{% extends "wines/base.html" %}
 {% load static %}
+
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 
 {% block title %}Dashboard{% endblock %}
 
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-{% endblock %}
-
 {% block content %}
-<h1>Welcome to your Wine Dashboard, {{ user.username }}!</h1>
-<h2>Your Wine Batches</h2>
+<h1>Dashboard</h1>
 
-<a href="{% url 'create_wine' %}">Add a New Wine Batch</a>
+<!-- Red Wines Section -->
+<div class="wine-category">
+    <h2>Red Wines</h2>
+    {% if red_wines %}
+    <div class="wine-cards">
+        {% for wine in red_wines %}
+            <div class="card">
+                <div class="card-header">
+                    <h3>{{ wine.lot_name }}</h3>
+                    <button class="menu-button">⋮</button>
+                </div>
+                <div class="tabs">
+                    <button class="tab active" onclick="showTab(event, 'info-{{ wine.id }}')">Info</button>
+                    <button class="tab" onclick="showTab(event, 'history-{{ wine.id }}')">History</button>
+                    <button class="tab" onclick="showTab(event, 'tasks-{{ wine.id }}')">Tasks</button>
+                </div>
+                <div class="tab-content" id="info-{{ wine.id }}">
+                    <p><strong>Variety:</strong> {{ wine.get_grape_variety_display }}</p>
+                    <p><strong>Volume:</strong> {{ wine.volume }} L</p>
+                    <p><strong>Status:</strong> {{ wine.status }}</p>
+                    <a href="{% url 'wine_detail' wine.id %}" class="btn">View Details</a>
+                </div>
+                <div class="tab-content hidden" id="history-{{ wine.id }}">
+                    <p><strong>Created on:</strong> {{ wine.date_created }}</p>
+                </div>
+                <div class="tab-content hidden" id="tasks-{{ wine.id }}">
+                    <p>No tasks available</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No red wines available.</p>
+{% endif %}
 
-<ul>
-  {% for wine in wine_batches %} 
-  <li>
-    {{ wine.lot_name }} - {{ wine.get_grape_variety_display }} ({{ wine.get_status_display }})
-    <a href="{% url 'wine_detail' wine.id %}">View</a> |
-    <a href="{% url 'edit_wine' wine.id %}">Edit</a> |
-    <a href="{% url 'delete_wine' wine.id %}">Delete</a>
-  </li>
-  {% empty %}
-  <li>You don't have any wine batches yet.</li>
-  {% endfor %}
-</ul>
+</div>
+
+<!-- Repeat similar structure for White Wines and Bottled Wines -->
+<script src="{% static 'wines/js/dashboard.js' %}"></script>
 {% endblock %}

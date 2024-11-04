@@ -1,0 +1,15 @@
+<!-- wines/templates/wines/transfer_to_vessel.html -->
+{% extends "wines/base.html" %}
+{% load static %}
+
+{% block title %}Transfer to Vessel{% endblock %}
+
+{% block content %}
+<h1>Transfer Wine Batch to Vessel</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Transfer</button>
+</form>
+{% endblock %}

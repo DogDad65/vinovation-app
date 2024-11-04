@@ -1,31 +1,46 @@
-<!-- wine_form.html -->
 {% extends 'wines/base.html' %}
 {% load static %}
 
-{% block title %}
-{% if is_edit %}Edit{% else %}Create{% endif %} Wine Batch
-{% endblock %}
-
-{% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/wine_form.css' %}">
-{% endblock %}
+{% block title %}Add a Batch{% endblock %}
 
 {% block content %}
-<h1>{% if is_edit %}Edit{% else %}Create{% endif %} Wine Batch</h1>
-
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">
-        {% if is_edit %}Update{% else %}Create{% endif %} Wine Batch
-    </button>
-</form>
-
-{% if is_edit %}
-    <!-- Only show delete button if editing an existing wine batch -->
-    <form action="{% url 'delete_wine' wine_batch.id %}" method="post" style="margin-top: 10px;">
+<div class="form-container">
+    <h1 class="form-title">Add a Batch</h1>
+    <form method="post" class="wine-form">
         {% csrf_token %}
-        <button type="submit" class="delete-button">Delete Wine Batch</button>
+        <div class="form-group">
+            <label for="lot_name">Name</label>
+            {{ form.lot_name }}
+        </div>
+        
+        <div class="form-group">
+            <label for="vintage">Vintage</label>
+            {{ form.vintage }}
+        </div>
+
+        <div class="form-group">
+            <label for="varietal">Varietal</label>
+            {{ form.varietal }}
+        </div>
+
+        <div class="form-group">
+            <label for="source">Source</label>
+            {{ form.source }}
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+            {{ form.status }}
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            {{ form.notes }}
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="save-button">Save</button>
+        </div>
     </form>
-{% endif %}
+</div>
 {% endblock %}

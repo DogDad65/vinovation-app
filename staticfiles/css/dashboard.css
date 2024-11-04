@@ -6,16 +6,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-.hidden {
-    display: none;
-}
-
-.tab.active {
-    font-weight: bold;
-    border-bottom: 2px solid blue; /* Adjust as needed for styling */
-}
-
-
 /* Wine Category Section */
 .wine-category {
     margin-bottom: 40px;

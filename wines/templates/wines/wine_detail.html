@@ -1,13 +1,6 @@
-<!-- wines/templates/wines/wine_detail.html -->
-{% extends 'wines/base.html' %}
-
-{% block title %}Wine Batch Detail{% endblock %}
-
-{% block content %}
-<h1>{{ wine_batch.lot_name }} - {{ wine_batch.get_grape_variety_display }}</h1>
-<p>Status: {{ wine_batch.get_status_display }}</p>
+<h2>{{ wine_batch.lot_name }}</h2>
+<p>Category: {{ wine_batch.category }}</p>
+<p>Variety: {{ wine_batch.grape_variety }}</p>
 <p>Volume: {{ wine_batch.volume }}</p>
-<p>Date Created: {{ wine_batch.date_created }}</p>
-
-<a href="{% url 'dashboard' %}">Back to Dashboard</a>
-{% endblock %}
+<a href="{% url 'add_analysis' wine_batch.id %}">Add Analysis</a> |
+<a href="{% url 'transfer_to_vessel' wine_batch.id %}">Transfer to Vessel</a>
