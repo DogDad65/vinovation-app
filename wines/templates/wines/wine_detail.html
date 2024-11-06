@@ -1,12 +1,9 @@
-<!-- wine_detail.html -->
 {% extends 'wines/base.html' %}
-
-
 
 {% block title %}Wine Details{% endblock %}
 
 {% block content %}
-<div class="wine-detail">
+<div class="wine-details-container">
     <h1>{{ wine.lot_name }}</h1>
     <p><strong>Category:</strong> {{ wine.get_category_display }}</p>
     <p><strong>Variety:</strong> {{ wine.get_grape_variety_display }}</p>
@@ -15,42 +12,45 @@
     <p><strong>AVA:</strong> {{ wine.ava }}</p>
     <p><strong>Vessel #:</strong> {% if wine.vessel %}{{ wine.vessel.name }}{% else %}N/A{% endif %}</p>
 
-    <!-- Edit and Delete Buttons -->
     <div class="actions">
-        <a href="{% url 'edit_wine' wine.pk %}" class="edit-button">Edit Wine</a>
+        <form action="{% url 'edit_wine' wine.pk %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="edit-btn btn">Edit Wine</button>
+        </form>
         <form action="{% url 'delete_wine' wine.pk %}" method="post" style="display:inline;">
             {% csrf_token %}
-            <button type="submit" class="delete-button">Delete Wine</button>
+            <button type="submit" class="delete-btn btn">Delete Wine</button>
         </form>
     </div>
 
-    <!-- Analyses Section -->
     <h2>Analyses</h2>
-<a href="{% url 'add_analysis' wine.pk %}" class="add-button">Add New Analysis</a>
-{% if analyses %}
-<div class="analyses-list">
-    {% for analysis in analyses %}
-        <div class="analysis-container">
-            <div class="analysis-item"><strong>Date:</strong> {{ analysis.date }}</div>
-            <div class="analysis-item"><strong>pH:</strong> {{ analysis.ph }}</div>
-            <div class="analysis-item"><strong>TA:</strong> {{ analysis.ta }}</div>
-            <div class="analysis-item"><strong>VA:</strong> {{ analysis.va }}</div>
-            <div class="analysis-item"><strong>SO₂:</strong> {{ analysis.so2 }}</div>
-            <div class="analysis-item"><strong>Brix:</strong> {{ analysis.brix|default:"N/A" }}</div>
-            <div class="analysis-item"><strong>Alcohol (%):</strong> {{ analysis.alcohol|default:"N/A" }}</div>
-            <!-- Edit and Delete Buttons in a single row -->
-            <div class="analysis-buttons">
-                <a href="{% url 'edit_analysis' analysis.pk %}" class="edit-button">Edit</a>
-                <form action="{% url 'delete_analysis' analysis.pk %}" method="post" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" class="delete-button">Delete</button>
-                </form>
-            </div>
+    <a href="{% url 'add_analysis' wine.pk %}" class="add-analysis-btn btn">Add New Analysis</a>
+    
+    {% if analyses %}
+        <div class="analyses-list">
+            {% for analysis in analyses %}
+                <div class="analysis-container">
+                    <div class="analysis-item">
+                        <strong>Date:</strong> {{ analysis.date }}<br>
+                        <strong>pH:</strong> {{ analysis.ph }}<br>
+                        <strong>TA:</strong> {{ analysis.ta }}<br>
+                        <strong>VA:</strong> {{ analysis.va }}<br>
+                        <strong>SO₂:</strong> {{ analysis.so2 }}<br>
+                        <strong>Brix:</strong> {{ analysis.brix|default:"N/A" }}<br>
+                        <strong>Alcohol (%):</strong> {{ analysis.alcohol|default:"N/A" }}
+                    </div>
+                    <div class="analysis-buttons">
+                        <a href="{% url 'edit_analysis' analysis.pk %}" class="edit-btn">Edit</a>
+                        <form action="{% url 'delete_analysis' analysis.pk %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="delete-btn">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-    {% endfor %}
-</div>
-{% else %}
-    <p>No analyses available for this wine.</p>
-{% endif %}
+    {% else %}
+        <p>No analyses available for this wine.</p>
+    {% endif %}
 </div>
 {% endblock %}

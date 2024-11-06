@@ -49,8 +49,14 @@
 
         <div class="input-group">
             <label for="id_vessel">Vessel:</label>
-            {{ form.vessel }}
+            <select name="vessel" id="id_vessel">
+                <option value="">---------</option>
+                {% for vessel in vessels %}
+                    <option value="{{ vessel.id }}">{{ vessel.name }} - {{ vessel.type }} - {{ vessel.volume }}</option>
+                {% endfor %}
+            </select>
         </div>
+        
 
         <button type="submit" class="save-button">SAVE</button>
     </form>

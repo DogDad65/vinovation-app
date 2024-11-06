@@ -7,8 +7,7 @@ class WineBatchAdmin(admin.ModelAdmin):
 
 @admin.register(Vessel)
 class VesselAdmin(admin.ModelAdmin):
-    # Removed 'location' since it's not a field in the Vessel model
-    list_display = ('name', 'capacity')
+    list_display = ['name', 'capacity', 'type', 'material', 'manufacturer', 'fermentor_type']
 
 @admin.register(Analysis)
 class AnalysisAdmin(admin.ModelAdmin):

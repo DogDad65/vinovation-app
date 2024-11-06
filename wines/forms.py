@@ -16,12 +16,12 @@ class WineBatchForm(forms.ModelForm):
 class AnalysisForm(forms.ModelForm):
     class Meta:
         model = Analysis
-        fields = ['ph', 'ta', 'va', 'so2', 'brix', 'alcohol']
+        fields = ['ph', 'ta', 'va', 'so2', 'brix', 'alcohol', 'notes']
 
 class VesselForm(forms.ModelForm):
     class Meta:
         model = Vessel
-        fields = ['name', 'capacity', 'type', 'material']
+        fields = ['name', 'capacity', 'type', 'material', 'user','manufacturer', 'fermentor_type']
 
 class WineBatchVesselTransferForm(forms.ModelForm):
     vessel = forms.ModelChoiceField(queryset=Vessel.objects.all(), label="Select Vessel")

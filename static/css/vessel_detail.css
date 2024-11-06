@@ -1,0 +1,62 @@
+/* General styling for the details page */
+.vessel-detail-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.vessel-detail-container h1 {
+    color: #370617;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.vessel-detail-container p {
+    font-size: 18px;
+    color: #555;
+    margin: 10px 0;
+}
+
+.vessel-detail-container p strong {
+    color: #370617;
+}
+
+.vessel-detail-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.vessel-detail-buttons .btn {
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.vessel-detail-buttons .btn-warning {
+    background-color: #FFA307; /* Button color to match the palette */
+    color: #fff;
+    border: none;
+}
+
+.vessel-detail-buttons .btn-warning:hover {
+    background-color: #E85D04;
+}
+
+.vessel-detail-buttons .btn-danger {
+    background-color: #D00000;
+    color: #fff;
+    border: none;
+}
+
+.vessel-detail-buttons .btn-danger:hover {
+    background-color: #9D0208;
+}

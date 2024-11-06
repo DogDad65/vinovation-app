@@ -1,0 +1,43 @@
+.form-container {
+    max-width: 600px; /* Set max width for the form container */
+    margin: 0 auto; /* Center the container */
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background */
+    border: 1px solid #ddd; /* Light border */
+    border-radius: 8px; /* Rounded corners */
+}
+
+h2 {
+    color: #800020; /* Header color */
+}
+
+.error {
+    color: red; /* Error text color */
+    font-size: 14px; /* Size of error text */
+}
+
+/* Style for the input fields */
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside fields */
+    margin: 8px 0; /* Space around fields */
+    border: 1px solid #ccc; /* Border for fields */
+    border-radius: 4px; /* Rounded corners */
+}
+
+/* Save button styles */
+.save-button {
+    background-color: #ff9800; /* Save button color */
+    color: white; /* Text color */
+    padding: 10px; /* Padding for button */
+    border: none; /* No border */
+    border-radius: 6px; /* Rounded corners */
+    cursor: pointer; /* Cursor style */
+    transition: background-color 0.3s ease; /* Transition effect */
+}
+
+.save-button:hover {
+    background-color: #e68900; /* Darker shade on hover */
+}

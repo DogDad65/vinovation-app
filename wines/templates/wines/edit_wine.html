@@ -7,7 +7,15 @@
     <h2>Edit Wine Lot: {{ wine.lot_name }}</h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label }}<br>
+                {{ field }}<br>
+                {% if field.errors %}
+                    <div class="error">{{ field.errors }}</div>  <!-- Show error messages -->
+                {% endif %}
+            </div>
+        {% endfor %}
         <button type="submit" class="save-button">Save Changes</button>
     </form>
 </div>

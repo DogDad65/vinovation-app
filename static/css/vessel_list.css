@@ -25,8 +25,9 @@
     padding: 10px 20px;
     border-radius: 5px;
     text-decoration: none;
-    float: right; /* Aligns to the right */
+    float: left; 
     font-weight: bold;
+    margin-bottom: auto;
 }
 
 .vessel-add-link:hover {
@@ -36,6 +37,7 @@
 /* Table styling */
 .vessel-table {
     width: 100%;
+    
     border-collapse: collapse;
 }
 
@@ -63,6 +65,8 @@
 
 /* Action buttons styling */
 .action-buttons a {
+    display: flex;
+    gap: 10px;
     margin-right: 5px;
     padding: 8px 12px;
     border-radius: 5px;

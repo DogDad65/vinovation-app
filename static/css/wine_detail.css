@@ -1,138 +1,102 @@
-/* Existing styles for the wine detail page */
-.wine-detail-card {
-    max-width: 600px;
-    margin: 20px auto;
+/* static/css/wine_detail.css */
+
+.wine-details-container {
+    max-width: 600px; /* Set a max-width for the container */
+    margin: 20px auto; /* Center and add top margin */
     padding: 20px;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: left;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
 }
 
-.wine-detail-card h1 {
-    font-size: 28px;
-    color: #370617;
-    margin-bottom: 10px;
-}
-
-.wine-detail-card p {
+.wine-info p {
     font-size: 16px;
-    color: #6A040F;
-    margin: 5px 0;
+    color: #333;
+    margin-bottom: 10px; /* Add some margin between paragraphs */
 }
 
-.wine-actions {
-    margin-top: 15px;
+h2 {
+    text-align: center;
+    color: #800020;
+    font-size: 24px;
+    margin-bottom: 20px;
 }
 
-.action-link {
-    color: #9D0208;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.action-link:hover {
-    text-decoration: underline;
-}
-
-.edit-button {
-    background-color: #E85D04;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    text-decoration: none;
-    margin-right: 8px;
-}
-
-.delete-button {
-    background-color: #D00000;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.add-button {
-    background-color: #FAA307;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 4px;
-    text-decoration: none;
+.analyses-section h3 {
+    color: #800020;
+    font-size: 20px;
+    margin-top: 30px;
     margin-bottom: 15px;
-    display: inline-block;
 }
 
-.analyses-list .card {
-    padding: 15px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    margin: 10px 0;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    border-left: 5px solid #370617;
+.analyses-list {
+    margin-top: 15px; /* Space between the heading and analysis list */
 }
 
-.form-actions .btn-primary {
-    background-color: #F48C06;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-    text-decoration: none;
-    margin-right: 5px;
-}
-
-.form-actions .btn-danger {
-    background-color: #DC2F02;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 4px;
-}
-
-/* New row layout styles for analyses */
 .analysis-container {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa; /* Light background for analyses */
+    border: 1px solid #ddd; /* Add border for distinction */
+    border-radius: 6px; /* Rounded corners */
+    padding: 10px; /* Padding inside analysis items */
+    margin-bottom: 15px; /* Space between analyses */
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Center items vertically */
 }
 
-.analysis-item {
-    margin-right: 15px;
-    font-size: 14px;
+.actions {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center the buttons */
+    gap: 10px; /* Space between the buttons */
+    margin-top: 20px; /* Add some top margin */
+}
+
+
+.edit-btn {
+    background-color: #ffc107; /* Set the edit button color to yellow */
+    color: #333; /* Dark text color for contrast */
+    padding: 10px 15px; /* Padding for a better look */
+    border: none; /* Remove border */
+    border-radius: 6px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.edit-button:hover {
+    background-color: #e0a800; /* Darker yellow on hover */
+}
+
+
+.delete-btn {
+    background-color: #dc3545; /* Red background for delete button */
+    color: #fff; /* Text color */
+    padding: 10px 15px; /* Button padding */
+    border-radius: 6px; /* Rounded corners */
+}
+
+.delete-button:hover {
+    background-color: #c82333; /* Darker shade on hover */
+}
+
+
+
+.add-analysis-btn {
+    display: block;
+    margin-top: 30px;
+    background-color: #ff9800;
+    color: #fff;
+    text-align: center;
+    padding: 10px; /* Add padding for the button */
+    border-radius: 6px; /* Rounded corners */
 }
 
 .analysis-buttons {
-    display: flex;
-    gap: 10px;
+    display: flex; /* Align edit and delete buttons in a row */
+    gap: 10px; /* Space between the buttons */
+    justify-content: flex-end; /* Align buttons to the right */
 }
 
-.analysis-buttons .edit-button,
-.analysis-buttons .delete-button {
-    padding: 5px 10px;
-    font-size: 12px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.analysis-buttons .edit-button {
-    background-color: #f0ad4e;
-    color: black;
-}
-
-.analysis-buttons .edit-button:hover {
-    background-color: #e0a800;
-}
-
-.analysis-buttons .delete-button {
-    background-color: #dc3545;
-    color: white;
-}
-
-.analysis-buttons .delete-button:hover {
-    background-color: #c82333;
+.analysis-item {
+    font-size: 14px; /* Set a consistent font size for analysis details */
+    color: #555; /* Slightly darker text for analysis details */
 }

@@ -45,15 +45,22 @@ VESSEL_TYPES = (
 class Vessel(models.Model):
     name = models.CharField(max_length=100)
     capacity = models.IntegerField(help_text="Capacity in liters")
-    type = models.CharField(max_length=10, choices=VESSEL_TYPES, default='tank')  # Default set to 'tank'
-    material = models.CharField(max_length=50, blank=True, null=True)  # e.g., stainless steel, oak
+    type = models.CharField(max_length=10, choices=VESSEL_TYPES, default='tank')
+    material = models.CharField(max_length=50, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="vessels")
+    date_added = models.DateField(auto_now_add=True)
+    manufacturer = models.CharField(max_length=100, blank=True, null=True)
+    FERMENTOR_CHOICES = [
+        ('Red', 'Red'),
+        ('White', 'White'),
+    ]
+    fermentor_type = models.CharField(max_length=5, choices=FERMENTOR_CHOICES, default='Red')
 
     def __str__(self):
         return f"{self.name} - {self.type.capitalize()} - {self.capacity}L"
 
-
 class WineBatch(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="wine_batches")
     lot_name = models.CharField(max_length=100)
     category = models.CharField(max_length=50, choices=WINE_CATEGORIES)
     grape_variety = models.CharField(max_length=20, choices=GRAPE_VARIETIES)
@@ -61,16 +68,14 @@ class WineBatch(models.Model):
     vineyard = models.CharField(max_length=100, null=True, blank=True)
     ava = models.CharField(max_length=100, null=True, blank=True)
     vessel = models.ForeignKey(Vessel, on_delete=models.SET_NULL, null=True, blank=True)
-    status = models.CharField(max_length=20, choices=WINE_STATUS, null=True, blank=True)  # Set choices for status
+    status = models.CharField(max_length=20, choices=WINE_STATUS, null=True, blank=True)
     vintage = models.IntegerField(null=True, blank=True)
     source = models.CharField(max_length=100, blank=True)
     notes = models.TextField(blank=True, null=True)
 
     def __str__(self):
-        # Updated to display grape variety name from choice
         variety = dict(GRAPE_VARIETIES).get(self.grape_variety, self.grape_variety)
         return f"{self.lot_name} ({variety})"
-
 
 class Analysis(models.Model):
     wine_batch = models.ForeignKey(WineBatch, on_delete=models.CASCADE, related_name='analyses')
@@ -81,9 +86,9 @@ class Analysis(models.Model):
     so2 = models.FloatField(verbose_name="SO₂")
     brix = models.FloatField(verbose_name="Brix", null=True, blank=True)
     alcohol = models.FloatField(verbose_name="Alcohol (%)", null=True, blank=True)
+    notes = models.TextField(blank=True, null=True)
 
     def clean(self):
-        # Ensure only Brix or Alcohol is provided, not both
         if self.brix and self.alcohol:
             raise ValidationError("Only one of Brix or Alcohol should be provided, not both.")
         elif not self.brix and not self.alcohol:

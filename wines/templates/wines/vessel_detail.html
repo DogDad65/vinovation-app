@@ -3,18 +3,21 @@
 {% block title %}Vessel Detail{% endblock %}
 
 {% block content %}
-<h1>Vessel Detail</h1>
-<p><strong>Name:</strong> {{ vessel.name }}</p>
-<p><strong>Type:</strong> {{ vessel.type }}</p>
-<p><strong>Capacity:</strong> {{ vessel.capacity }} L</p>
-<p><strong>Material:</strong> {{ vessel.material }}</p>
+<div class="vessel-detail-container">
+    <h1>Vessel Detail</h1>
+    <p><strong>Name:</strong> {{ vessel.name }}</p>
+    <p><strong>Type:</strong> {{ vessel.type }}</p>
+    <p><strong>Capacity:</strong> {{ vessel.capacity }} L</p>
+    <p><strong>Material:</strong> {{ vessel.material }}</p>
+    <p><strong>Manufacturer:</strong> {{ vessel.manufacturer }}</p>
 
-<!-- Edit and Delete buttons -->
-<div>
-    <a href="{% url 'edit_vessel' vessel.id %}" class="btn btn-warning">Edit</a>
-    <form action="{% url 'delete_vessel' vessel.id %}" method="post" style="display:inline;">
-        {% csrf_token %}
-        <button type="submit" class="btn btn-danger">Delete</button>
-    </form>
+    <!-- Edit and Delete buttons -->
+    <div class="vessel-detail-buttons">
+        <a href="{% url 'edit_vessel' vessel.id %}" class="btn btn-warning">Edit</a>
+        <form action="{% url 'delete_vessel' vessel.id %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
 </div>
 {% endblock %}

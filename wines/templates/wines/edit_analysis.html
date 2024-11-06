@@ -4,11 +4,13 @@
 
 {% block content %}
 <div class="form-container">
-    <h2>Edit Analysis</h2>
-    <form method="post">
+    <h2 class="form-title">Edit Analysis</h2>
+    <form method="post" class="analysis-form">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="save-button">Update Analysis</button>
+        <div class="form-actions">
+            <button type="submit" class="save-button">Update Analysis</button>
+        </div>
     </form>
 </div>
 {% endblock %}

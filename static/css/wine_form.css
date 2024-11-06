@@ -48,6 +48,7 @@ input:focus, select:focus {
 /* Save button */
 .save-button {
   background: linear-gradient(135deg, #ffac41, #ff5733); /* Orange gradient */
+  justify-content: center;
   color: white;
   padding: 10px 20px;
   font-size: 18px;
