@@ -1,9 +1,11 @@
 /* auth.css */
 
-/* auth.css */
-
 body {
     background-color: #f4f4f9;
+    background-image: url('https://images.unsplash.com/photo-1601502444609-14fa1cb181fc?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8d2luZSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -19,7 +21,7 @@ body {
     background-color: #ffffff;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     border-radius: 12px;
-    text-align: left; /* Align text to the left */
+    text-align: left;
 }
 
 h2 {
@@ -27,7 +29,7 @@ h2 {
     margin-bottom: 20px;
     font-size: 24px;
     font-weight: 600;
-    text-align: center; /* Center-align header */
+    text-align: center;
 }
 
 form {
@@ -69,7 +71,7 @@ button {
     border-radius: 6px;
     cursor: pointer;
     width: 100%;
-    margin-top: 15px; /* Adds space above button */
+    margin-top: 15px;
     transition: background-color 0.3s ease;
 }
 
@@ -77,12 +79,28 @@ button:hover {
     background-color: #660019;
 }
 
+button.loading::after {
+    content: '';
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-left: 10px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 a {
     color: #800020;
     text-decoration: none;
     font-size: 14px;
     text-align: center;
-    display: block; /* Ensures link is centered on its own line */
+    display: block;
     margin-top: 10px;
 }
 
@@ -93,7 +111,7 @@ a:hover {
 .terms-text {
     font-size: 12px;
     color: #777;
-    margin-top: 15px; /* Space above terms */
+    margin-top: 15px;
     text-align: center;
 }
 
@@ -105,3 +123,18 @@ a:hover {
     margin-top: -5px;
 }
 
+@media (max-width: 600px) {
+    .card {
+        max-width: 90%;
+        padding: 20px;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    input[type="text"],
+    input[type="password"],
+    button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}

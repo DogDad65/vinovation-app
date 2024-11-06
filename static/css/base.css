@@ -1,60 +1,54 @@
 /* Base styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    background-color: #f9f9f9; /* Light neutral background */
     color: #333;
     margin: 0;
     padding: 0;
 }
 
+/* Headings */
 h1, h2 {
-    color: #333;
-}
-
-/* Container for main content */
-.container {
-    margin-left: 220px;  /* Adjust to match the sidebar width */
+    color: #370617; /* Dark burgundy for headers */
+    margin: 0;
     padding: 20px;
-    max-width: calc(100% - 220px);  /* Ensure content doesn't overflow with sidebar */
 }
 
-/* Sidebar adjustments */
+/* Main content container */
+.container {
+    margin-left: 220px;
+    padding: 20px;
+    max-width: calc(100% - 220px);  /* Responsive to sidebar width */
+}
+
+/* Sidebar styling */
+/* Sidebar Background and Container */
 .sidebar {
+    background-color: #370617; /* Deep wine color */
+    background: linear-gradient(to bottom, #370617, #6A040F);
+    color: #f9f9f9;
+    width: 220px;
+    height: 100vh;
     position: fixed;
     left: 0;
     top: 0;
-    width: 220px; /* Adjust width to match the margin in .container */
-    height: 100%;
-    background-color: #333;
-    color: white;
     padding-top: 20px;
-    z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Sidebar navigation */
-.sidebar ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-    width: 100%;
-}
-
-.sidebar li {
-    width: 100%;
-}
-
+/* Sidebar Navigation Links */
 .sidebar a {
-    color: white;
+    color: #FFBA08; /* Warm yellow for links */
     text-decoration: none;
     display: flex;
     align-items: center;
-    padding: 10px 20px;
+    padding: 12px 20px;
     width: 100%;
     box-sizing: border-box;
-    transition: background-color 0.3s ease;
+    font-weight: bold;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .sidebar a i {
@@ -62,19 +56,60 @@ h1, h2 {
 }
 
 .sidebar a:hover {
-    background-color: #444;
-    text-decoration: none;
+    background-color: #6A040F; /* Darker burgundy on hover */
+    color: #FAA307; /* Slightly darker yellow on hover */
 }
 
-/* Active link styling (optional: add active class to the current page link) */
+/* Active Link Styling */
 .sidebar a.active {
-    background-color: #555;
+    background-color: #9D0208; /* Bold red for active link */
+    color: #FFBA08;
     font-weight: bold;
 }
 
-/* Button styles */
-button, .button {
-    background-color: #007bff;
+/* Logout Button Styling */
+.logout-button {
+    background: none;
+    border: none;
+    color: #FFBA08; /* Same as link color for consistency */
+    cursor: pointer;
+    text-align: left;
+    padding: 12px 20px;
+    width: 100%;
+    font-size: 1em;
+    display: flex;
+    align-items: center;
+}
+
+.logout-button:hover {
+    background-color: #6A040F;
+    color: #FAA307;
+}
+
+/* Content area for each page */
+.content {
+    padding: 20px;
+    max-width: 100%;
+}
+
+/* General button styles */
+.primary-button {
+    background-color: #800020; /* Dark red for primary buttons */
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.primary-button:hover {
+    background-color: #660019; /* Darker shade on hover */
+}
+
+.button, button {
+    background-color: #E85D04; /* Bright orange for secondary buttons */
     color: white;
     border: none;
     padding: 10px 15px;
@@ -83,17 +118,11 @@ button, .button {
     font-size: 1em;
 }
 
-button:hover, .button:hover {
-    background-color: #0056b3;
+.button:hover, button:hover {
+    background-color: #DC2F02; /* Darker red-orange on hover */
 }
 
-/* Content area within each page */
-.content {
-    padding: 20px;
-    max-width: 100%;
-}
-
-/* Card styles for dashboard wine categories */
+/* Card styles for dashboard and general use */
 .card {
     background-color: #fff;
     border-radius: 8px;
@@ -101,27 +130,27 @@ button:hover, .button:hover {
     padding: 20px;
     margin-bottom: 20px;
     text-align: left;
-    width: 100%;
     max-width: 600px;
+    width: 100%;
+    border-left: 5px solid #370617; /* Accent border in dark burgundy */
 }
 
-/* Logout button */
+/* Logout button style */
 .logout-button {
     background: none;
     border: none;
-    color: white;
+    color: #FFBA08; /* Bright yellow for contrast */
     cursor: pointer;
     text-align: left;
     padding: 10px;
     width: 100%;
-    text-decoration: none;
 }
 
 .logout-button:hover {
-    color: #ff4b4b;
+    color: #FAA307; /* Lighter yellow on hover */
 }
 
-/* Utility classes for spacing and layout adjustments */
+/* Utility classes for spacing */
 .mt-20 {
     margin-top: 20px;
 }
@@ -130,7 +159,7 @@ button:hover, .button:hover {
     margin-bottom: 20px;
 }
 
-/* Responsive design */
+/* Responsive adjustments */
 @media (max-width: 768px) {
     .container {
         margin-left: 0;

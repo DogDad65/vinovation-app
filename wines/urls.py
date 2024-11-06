@@ -35,7 +35,6 @@ wine_patterns = [
     path('vessels/<int:vessel_id>/', views.vessel_detail, name='vessel_detail'),
     path('vessels/<int:vessel_id>/edit/', views.edit_vessel, name='edit_vessel'),
     path('vessels/<int:vessel_id>/delete/', views.delete_vessel, name='delete_vessel'),
- 
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 # Combine all URL patterns

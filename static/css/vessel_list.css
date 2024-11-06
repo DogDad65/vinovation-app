@@ -1,61 +1,76 @@
+/* Container for the vessels list page */
 .vessel-container {
+    margin: 40px auto;
     padding: 20px;
+    max-width: 1000px; /* Wider container to fit the table */
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Header styling for section title */
 .vessel-header {
-    font-size: 24px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: #800020; /* Darker red from the palette */
     margin-bottom: 20px;
 }
 
+/* Link styling for adding new vessel */
 .vessel-add-link {
     display: inline-block;
-    background-color: #4CAF50; /* Green color */
+    background-color: #ffba08; /* Bright yellow-orange from palette */
     color: white;
     padding: 10px 20px;
-    margin-bottom: 20px;
-    border: none;
     border-radius: 5px;
     text-decoration: none;
+    float: right; /* Aligns to the right */
     font-weight: bold;
-    cursor: pointer;
 }
 
 .vessel-add-link:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #e0a800;
 }
 
+/* Table styling */
 .vessel-table {
-    border-collapse: collapse;
     width: 100%;
+    border-collapse: collapse;
 }
 
 .vessel-table th, .vessel-table td {
+    padding: 12px;
     border: 1px solid #ddd;
-    padding: 8px;
     text-align: left;
 }
 
 .vessel-table th {
-    background-color: #f2f2f2;
+    background-color: #f8d7da; /* Light red background for headers */
+    font-weight: bold;
+    color: #800020;
 }
 
 .vessel-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
+/* Styling for the "No wine batches stored" text */
 .no-batch-text {
     color: #999;
     font-style: italic;
 }
 
+/* Action buttons styling */
 .action-buttons a {
     margin-right: 5px;
-    padding: 5px 10px;
-    border-radius: 3px;
+    padding: 8px 12px;
+    border-radius: 5px;
     text-decoration: none;
     font-weight: bold;
 }
 
+/* Specific styling for each button type */
 .view-button {
     background-color: #6c757d;
     color: white;
@@ -67,10 +82,11 @@
 }
 
 .delete-button {
-    background-color: #dc3545;
+    background-color: #d9534f;
     color: white;
 }
 
+/* Hover effects for buttons */
 .view-button:hover {
     background-color: #5a6268;
 }

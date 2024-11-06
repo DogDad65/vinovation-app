@@ -26,31 +26,31 @@
 
     <!-- Analyses Section -->
     <h2>Analyses</h2>
-    <a href="{% url 'add_analysis' wine.pk %}" class="add-button">Add New Analysis</a>
-    {% if analyses %}
-    <div class="analyses-list">
-        {% for analysis in analyses %}
-            <div class="card">
-                <p><strong>Date:</strong> {{ analysis.date }}</p>
-                <p><strong>pH:</strong> {{ analysis.ph }}</p>
-                <p><strong>TA:</strong> {{ analysis.ta }}</p>
-                <p><strong>VA:</strong> {{ analysis.va }}</p>
-                <p><strong>SO₂:</strong> {{ analysis.so2 }}</p>
-                <p><strong>Brix:</strong> {{ analysis.brix|default:"N/A" }}</p>
-                <p><strong>Alcohol (%):</strong> {{ analysis.alcohol|default:"N/A" }}</p>
-                <div class="form-actions">
-                    <a href="{% url 'edit_analysis' analysis.pk %}" class="btn btn-primary">Edit</a>
-                    <form action="{% url 'delete_analysis' analysis.pk %}" method="post" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
+<a href="{% url 'add_analysis' wine.pk %}" class="add-button">Add New Analysis</a>
+{% if analyses %}
+<div class="analyses-list">
+    {% for analysis in analyses %}
+        <div class="analysis-container">
+            <div class="analysis-item"><strong>Date:</strong> {{ analysis.date }}</div>
+            <div class="analysis-item"><strong>pH:</strong> {{ analysis.ph }}</div>
+            <div class="analysis-item"><strong>TA:</strong> {{ analysis.ta }}</div>
+            <div class="analysis-item"><strong>VA:</strong> {{ analysis.va }}</div>
+            <div class="analysis-item"><strong>SO₂:</strong> {{ analysis.so2 }}</div>
+            <div class="analysis-item"><strong>Brix:</strong> {{ analysis.brix|default:"N/A" }}</div>
+            <div class="analysis-item"><strong>Alcohol (%):</strong> {{ analysis.alcohol|default:"N/A" }}</div>
+            <!-- Edit and Delete Buttons in a single row -->
+            <div class="analysis-buttons">
+                <a href="{% url 'edit_analysis' analysis.pk %}" class="edit-button">Edit</a>
+                <form action="{% url 'delete_analysis' analysis.pk %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-button">Delete</button>
+                </form>
             </div>
-        {% endfor %}
-    </div>
+        </div>
+    {% endfor %}
+</div>
 {% else %}
     <p>No analyses available for this wine.</p>
 {% endif %}
-
 </div>
 {% endblock %}

@@ -1,5 +1,4 @@
-/* Styles for the wine detail page */
-
+/* Existing styles for the wine detail page */
 .wine-detail-card {
     max-width: 600px;
     margin: 20px auto;
@@ -11,14 +10,14 @@
 }
 
 .wine-detail-card h1 {
-    font-size: 24px;
-    color: #333;
+    font-size: 28px;
+    color: #370617;
     margin-bottom: 10px;
 }
 
 .wine-detail-card p {
     font-size: 16px;
-    color: #555;
+    color: #6A040F;
     margin: 5px 0;
 }
 
@@ -27,7 +26,7 @@
 }
 
 .action-link {
-    color: #800020;
+    color: #9D0208;
     text-decoration: none;
     font-weight: bold;
 }
@@ -35,17 +34,19 @@
 .action-link:hover {
     text-decoration: underline;
 }
+
 .edit-button {
-    background-color: #007bff;
+    background-color: #E85D04;
     color: white;
     padding: 8px 16px;
     border: none;
     border-radius: 4px;
     text-decoration: none;
+    margin-right: 8px;
 }
 
 .delete-button {
-    background-color: #dc3545;
+    background-color: #D00000;
     color: white;
     padding: 8px 16px;
     border: none;
@@ -53,10 +54,85 @@
     cursor: pointer;
 }
 
-.cancel-button {
-    background-color: #6c757d;
+.add-button {
+    background-color: #FAA307;
     color: white;
     padding: 8px 16px;
     border-radius: 4px;
     text-decoration: none;
+    margin-bottom: 15px;
+    display: inline-block;
+}
+
+.analyses-list .card {
+    padding: 15px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin: 10px 0;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid #370617;
+}
+
+.form-actions .btn-primary {
+    background-color: #F48C06;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+.form-actions .btn-danger {
+    background-color: #DC2F02;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+
+/* New row layout styles for analyses */
+.analysis-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.analysis-item {
+    margin-right: 15px;
+    font-size: 14px;
+}
+
+.analysis-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.analysis-buttons .edit-button,
+.analysis-buttons .delete-button {
+    padding: 5px 10px;
+    font-size: 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.analysis-buttons .edit-button {
+    background-color: #f0ad4e;
+    color: black;
+}
+
+.analysis-buttons .edit-button:hover {
+    background-color: #e0a800;
+}
+
+.analysis-buttons .delete-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+.analysis-buttons .delete-button:hover {
+    background-color: #c82333;
 }

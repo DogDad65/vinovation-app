@@ -10,20 +10,25 @@
     <h2>Add a Batch</h2>
     <form id="wineForm" method="post">
         {% csrf_token %}
+
         <div class="input-group">
-            <label for="lot_name">Lot Name:</label>
-            <input type="text" id="lot_name" name="lot_name">
+            <label for="id_lot_name">Lot Name:</label>
+            {{ form.lot_name }}
+        </div>
+        <div class="input-group">
+            <label for="id_vintage">Vintage:</label>
+            {{ form.vintage }}
+        </div>
+        
+        <div class="input-group">
+            <label for="id_grape_variety">Grape Variety:</label>
+            {{ form.grape_variety }}
         </div>
 
         <div class="input-group">
-            <label for="grape_variety">Grape Variety:</label>
-            <input type="text" id="grape_variety" name="grape_variety">
-        </div>
-
-        <div class="input-group">
-            <label for="volume">Volume:</label>
+            <label for="id_volume">Volume:</label>
             <div class="volume-container">
-                <input type="text" id="volume" name="volume">
+                {{ form.volume }}
                 <select id="volume_unit" name="volume_unit" class="volume-unit">
                     <option value="gallons">Gallons</option>
                     <option value="liters">Liters</option>
@@ -33,27 +38,18 @@
         </div>
 
         <div class="input-group">
-            <label for="status">Status:</label>
-            <select id="status" name="status">
-                <option value="in_process">In Process</option>
-                <option value="complete">Complete</option>
-            </select>
+            <label for="id_status">Status:</label>
+            {{ form.status }}
         </div>
 
         <div class="input-group">
-            <label for="category">Category:</label>
-            <select id="category" name="category">
-                <option value="red">Red</option>
-                <option value="white">White</option>
-            </select>
+            <label for="id_category">Category:</label>
+            {{ form.category }}
         </div>
 
         <div class="input-group">
-            <label for="vessel">Vessel:</label>
-            <select id="vessel" name="vessel">
-                <option value="tank">Tank</option>
-                <option value="barrel">Barrel</option>
-            </select>
+            <label for="id_vessel">Vessel:</label>
+            {{ form.vessel }}
         </div>
 
         <button type="submit" class="save-button">SAVE</button>

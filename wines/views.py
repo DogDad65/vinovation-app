@@ -2,14 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
+from django.views.generic import TemplateView
 from .models import WineBatch, Vessel, Analysis
-from .forms import WineForm
-from django.views.generic import TemplateView  
 from .forms import WineBatchForm, AnalysisForm, VesselForm, WineBatchVesselTransferForm
 
-
-from .models import WineBatch, Analysis, Vessel
-from .forms import WineBatchForm, AnalysisForm, VesselForm, WineBatchVesselTransferForm
 
 # --- Landing and Dashboard Views ---
 
@@ -53,8 +49,14 @@ def create_wine(request):
         form = WineBatchForm(request.POST)
         if form.is_valid():
             wine_batch = form.save(commit=False)
+            # Additional fields can be set here if needed, e.g., user
             wine_batch.save()
-            return redirect('dashboard')
+            messages.success(request, "Wine batch created successfully.")
+            return redirect('wine_list')  # Adjust redirect to the correct URL after saving
+        else:
+            # Log form errors to help identify the issue
+            print("Form errors:", form.errors)
+            messages.error(request, "There was an error saving the wine batch. Please check your input.")
     else:
         form = WineBatchForm()
     return render(request, 'wines/wine_form.html', {'form': form})
@@ -62,7 +64,7 @@ def create_wine(request):
 
 @login_required
 def wine_list(request):
-    wines = WineBatch.objects.all()
+    wines = WineBatch.objects.all()  # Fetch all WineBatch entries
     return render(request, 'wines/wine_list.html', {'wines': wines})
 
 
@@ -73,15 +75,16 @@ def wine_detail(request, pk):
     return render(request, 'wines/wine_detail.html', {'wine': wine, 'analyses': analyses})
 
 def edit_wine(request, pk):
-    wine = get_object_or_404(WineBatch, pk=pk)
+    wine = WineBatch.objects.get(pk=pk)
     if request.method == 'POST':
-        form = WineForm(request.POST, instance=wine)
+        form = WineBatchForm(request.POST, instance=wine)
         if form.is_valid():
             form.save()
-            return redirect('wine_detail', pk=wine.pk)
+            return redirect('wine_list')
     else:
-        form = WineForm(instance=wine)
-    return render(request, 'wines/edit_wine.html', {'form': form, 'wine': wine})
+        form = WineBatchForm(instance=wine)
+    
+    return render(request, 'wines/edit_wine.html', {'form': form})
 
 def delete_wine(request, pk):
     wine = get_object_or_404(WineBatch, pk=pk)
@@ -104,13 +107,12 @@ def add_analysis(request, wine_id):
             analysis.wine_batch = wine_batch
             analysis.save()
             messages.success(request, "Analysis added successfully.")
-            return redirect('wine_detail', wine_id=wine_batch.id)
+            return redirect('wine_detail', pk=wine_batch.id)  # Use pk instead of wine_id here
     else:
         form = AnalysisForm()
     return render(request, 'wines/analysis_form.html', {'form': form, 'wine_batch': wine_batch})
 
 
-from django.shortcuts import redirect
 
 def edit_analysis(request, analysis_id):
     analysis = get_object_or_404(Analysis, id=analysis_id)
@@ -154,26 +156,14 @@ def create_vessel(request):
 
 
 @login_required
-def edit_vessel(request, vessel_id):
-    vessel = get_object_or_404(Vessel, id=vessel_id)
-    if request.method == 'POST':
-        form = VesselForm(request.POST, instance=vessel)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Vessel updated successfully.")
-            return redirect('vessel_list')
-    else:
-        form = VesselForm(instance=vessel)
-    return render(request, 'wines/vessel_form.html', {'form': form, 'vessel': vessel})
-
-@login_required
 def delete_vessel(request, vessel_id):
     vessel = get_object_or_404(Vessel, id=vessel_id)
     if request.method == 'POST':
         vessel.delete()
         messages.success(request, "Vessel deleted successfully.")
         return redirect('vessel_list')
-    return redirect('vessel_detail', vessel_id=vessel.id)
+    return render(request, 'wines/confirm_delete.html', {'vessel': vessel})
+
 
 # Vessel detail view
 @login_required

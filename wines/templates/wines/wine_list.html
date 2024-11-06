@@ -5,7 +5,7 @@
 {% block content %}
 <div class="wine-container">
     <h1 class="wine-header">Your Wine Batches</h1>
-    <p>Logged in as: {{ user.username }}</p>
+    
     <a href="{% url 'create_wine' %}" class="wine-add-link">Create New Wine Batch</a>
 
     <table class="wine-table">
@@ -13,28 +13,32 @@
             <tr>
                 <th>Batch Name</th>
                 <th>Vintage</th>
+                <th>Category</th>
                 <th>Variety</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            {% for batch in wine_batches %}
+            {% for wine in wines %}
                 <tr>
-                    <td>{{ batch.name }}</td>
-                    <td>{{ batch.vintage }}</td>
-                    <td>{{ batch.variety }}</td>
+                    <td>{{ wine.lot_name }}</td>
+                    <td>{{ wine.vintage|default:"N/A" }}</td>
+                    <td>{{ wine.category }}</td>
+                    <td>{{ wine.get_grape_variety_display }}</td>
                     <td>
-                        <a href="{% url 'wine_detail' batch.id %}" class="view-button">View</a>
-                        <a href="{% url 'edit_wine' batch.id %}" class="edit-button">Edit</a>
-                        <a href="{% url 'delete_wine' batch.id %}" class="delete-button">Delete</a>
+                        <a href="{% url 'wine_detail' wine.id %}" class="view-button">View</a>
+                        <a href="{% url 'edit_wine' wine.id %}" class="edit-button">Edit</a>
+                        <a href="{% url 'delete_wine' wine.id %}" class="delete-button">Delete</a>
                     </td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="4">No wine batches available.</td>
+                    <td colspan="5">No wine batches available.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    
+    
 </div>
 {% endblock %}

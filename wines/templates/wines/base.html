@@ -1,19 +1,19 @@
-<!-- base.html -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <title>{% block title %}Vinovation{% endblock %}</title>
     {% load static %}
 
-    <!-- Link to your main CSS files -->
+    <!-- Main CSS files in order of specificity -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/wine_detail.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'css/wine_detail.css' %}">
+    <link rel="stylesheet" href="{% static 'css/wine_list.css' %}">
     <link rel="stylesheet" href="{% static 'css/vessel_list.css' %}">
-    <link rel="stylesheet" href="{% static 'css/form.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/wine_form.css' %}">
 
     <!-- Font Awesome for icons -->
     <link
@@ -22,57 +22,27 @@
     />
 
     <!-- JavaScript file for additional interactivity if required -->
-    <script src="{% static 'js/dashboard.js' %}"></script>
-  </head>
+    <script src="{% static 'js/dashboard.js' %}" defer></script>
+</head>
 
-  <body>
+<body>
     {% if request.resolver_match.url_name != 'landing' %}
     <!-- Sidebar Navigation -->
     <div class="sidebar">
       <ul class="sidebar-nav">
-        <li>
-          <a href="{% url 'dashboard' %}">
-            <i class="fas fa-tachometer-alt"></i> Dashboard
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'create_wine' %}">
-            <i class="fas fa-wine-bottle"></i> Create Wine Batch
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'wine_list' %}">
-            <i class="fas fa-bottle"></i> Analysis
-          </a>
-        </li>
-        <li>
-          <a href="{% url 'vessel_list' %}">
-            <i class="fas fa-flask"></i> Vessel
-          </a>
-        </li>
-        <li>
-          <!-- Logout form styled to look like a link with icon -->
-          <form
-            action="{% url 'logout' %}"
-            method="post"
-            style="display: inline"
-          >
-            {% csrf_token %}
-            <button
-              type="submit"
-              style="
-                background: none;
-                border: none;
-                color: inherit;
-                padding: 0;
-                cursor: pointer;
-              "
-            >
-              <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-          </form>
-        </li>
+          <li><a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+          <li><a href="{% url 'create_wine' %}" class="{% if request.resolver_match.url_name == 'create_wine' %}active{% endif %}"><i class="fas fa-wine-bottle"></i> Create Wine Batch</a></li>
+          <li><a href="{% url 'wine_list' %}" class="{% if request.resolver_match.url_name == 'wine_list' %}active{% endif %}"><i class="fas fa-chart-line"></i> Wine List</a></li>
+          <li><a href="{% url 'vessel_list' %}" class="{% if request.resolver_match.url_name == 'vessel_list' %}active{% endif %}"><i class="fas fa-flask"></i> Vessel</a></li>
+          <li>
+              <form action="{% url 'logout' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
+              </form>
+          </li>
       </ul>
+  </div>
+  
     </div>
     {% endif %}
 
@@ -84,5 +54,5 @@
         {% endblock %}
       </main>
     </div>
-  </body>
+</body>
 </html>

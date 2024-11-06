@@ -21,7 +21,6 @@ GRAPE_VARIETIES = (
     ('GR', 'Grenache'),
     ('VB', 'Verdelho Blanc'),
     ('VBG', 'Verdelho Grenache'),
-    
 )
 
 WINE_CATEGORIES = (
@@ -62,8 +61,6 @@ class WineBatch(models.Model):
     vineyard = models.CharField(max_length=100, null=True, blank=True)
     ava = models.CharField(max_length=100, null=True, blank=True)
     vessel = models.ForeignKey(Vessel, on_delete=models.SET_NULL, null=True, blank=True)
-    
-
     status = models.CharField(max_length=20, choices=WINE_STATUS, null=True, blank=True)  # Set choices for status
     vintage = models.IntegerField(null=True, blank=True)
     source = models.CharField(max_length=100, blank=True)

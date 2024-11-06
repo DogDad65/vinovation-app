@@ -1,68 +1,124 @@
+/* Container styling for the main wine batches section */
 .wine-container {
-    margin: 20px;
+    margin: 20px auto;
     padding: 20px;
-    border-radius: 8px;
+    max-width: 800px;
+    border-radius: 10px; /* Slightly rounded corners */
     background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Deeper shadow for prominence */
 }
 
+/* Header styling for section title */
 .wine-header {
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
+    text-align: center;
+    color: #370617; /* Dark wine color for title */
     margin-bottom: 20px;
-    color: #333;
 }
 
+/* Link styling for adding new wine batch */
+.wine-add-link {
+    display: inline-block;
+    background-color: #FFBA08; /* Yellow for the button */
+    color: #370617; /* Dark wine color for text */
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    float: right;
+}
+
+.wine-add-link:hover {
+    background-color: #FAA307; /* Slightly darker yellow on hover */
+}
+
+/* Table styling */
 .wine-table {
     width: 100%;
     border-collapse: collapse;
+    overflow-x: auto;
+    display: block;
 }
 
 .wine-table th,
 .wine-table td {
     border: 1px solid #ddd;
-    padding: 12px;
+    padding: 15px;
     text-align: left;
 }
 
+/* Table Header */
 .wine-table th {
-    background-color: #f2f2f2;
+    background-color: #f8d7da; /* Light red for the header */
     font-weight: bold;
+    color: #370617; /* Dark wine color */
 }
 
+/* Table Row Stripes */
 .wine-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-.wine-add-link {
-    display: inline-block;
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 15px;
-    margin-top: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    text-decoration: none;
+.wine-table tr:nth-child(odd) {
+    background-color: #fff5f5; /* Very light red for contrast */
+}
+.empty-cell {
+    color: #bbb; /* Light gray color for clarity */
+    font-style: italic; /* Italicized to indicate a placeholder */
 }
 
+
+/* Responsive table adjustments for smaller screens */
+@media (max-width: 768px) {
+    .wine-table td,
+    .wine-table th {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+    .wine-table th {
+        background-color: transparent;
+    }
+    .wine-container {
+        padding: 10px;
+        margin: 10px auto;
+    }
+}
+
+/* Button styles for actions */
 .view-button, .edit-button, .delete-button {
-    padding: 5px 10px;
-    margin: 0 3px;
-    border-radius: 3px;
+    padding: 8px 12px;
+    margin: 0 4px;
+    border-radius: 5px;
     text-decoration: none;
     color: white;
     font-size: 14px;
     cursor: pointer;
 }
 
+/* Individual Button Colors */
 .view-button {
-    background-color: #5bc0de;
+    background-color: #5bc0de; /* Light blue for view */
+}
+
+.view-button:hover {
+    background-color: #46a0c0;
 }
 
 .edit-button {
-    background-color: #f0ad4e;
+    background-color: #E85D04; /* Orange from palette */
+}
+
+.edit-button:hover {
+    background-color: #D9480F;
 }
 
 .delete-button {
-    background-color: #d9534f;
+    background-color: #D00000; /* Deep red for delete */
+}
+
+.delete-button:hover {
+    background-color: #9D0208;
 }
