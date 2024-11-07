@@ -1,15 +1,22 @@
-<!-- wines/templates/wines/transfer_to_vessel.html -->
-{% extends "wines/base.html" %}
-{% load static %}
+{% extends 'wines/base.html' %}
+{% load custom_filters %}
 
-{% block title %}Transfer to Vessel{% endblock %}
+{% block title %}Transfer Wine Batch to Vessel{% endblock %}
 
 {% block content %}
-<h1>Transfer Wine Batch to Vessel</h1>
+<div class="transfer-container">
+    <h1 class="transfer-header">Transfer Wine Batch to Vessel</h1>
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Transfer</button>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="vessel">Select Vessel:</label>
+            {{ form.vessel|add_class:"form-control" }} <!-- Apply the custom add_class filter -->
+            {% if form.vessel.errors %}
+                <div class="error-message">{{ form.vessel.errors|join:", " }}</div> <!-- Display errors -->
+            {% endif %}
+        </div>
+        <button type="submit" class="btn transfer-btn">Transfer</button>
+    </form>
+</div>
 {% endblock %}

@@ -1,0 +1,28 @@
+/* Basic styles for the analysis form */
+.form-container {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 600px;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.error {
+    color: red; /* Style for error messages */
+    font-size: 0.9em;
+}
+
+.save-button {
+    background-color: #ffba08;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.save-button:hover {
+    background-color: #e0a800;
+}

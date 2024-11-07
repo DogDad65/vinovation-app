@@ -15,30 +15,34 @@
                 <th>Vintage</th>
                 <th>Category</th>
                 <th>Variety</th>
-                <th>Actions</th>
+                <th>Vessel</th>
+                <th>Actions</th> 
             </tr>
         </thead>
         <tbody>
             {% for wine in wines %}
                 <tr>
-                    <td>{{ wine.lot_name }}</td>
+                    <td><a href="{% url 'wine_detail' wine.id %}">{{ wine.lot_name }}</a></td>
                     <td>{{ wine.vintage|default:"N/A" }}</td>
                     <td>{{ wine.category }}</td>
                     <td>{{ wine.get_grape_variety_display }}</td>
                     <td>
-                        <a href="{% url 'wine_detail' wine.id %}" class="view-button">View</a>
-                        <a href="{% url 'edit_wine' wine.id %}" class="edit-button">Edit</a>
-                        <a href="{% url 'delete_wine' wine.id %}" class="delete-button">Delete</a>
+                        {% if wine.vessel %}
+                            {{ wine.vessel.name }}
+                        {% else %}
+                            N/A
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'edit_wine' wine.id %}">Edit</a> 
                     </td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="5">No wine batches available.</td>
+                    <td colspan="6">No wine batches available.</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
-    
-    
 </div>
 {% endblock %}

@@ -78,6 +78,21 @@ h2 {
     background-color: #c82333; /* Darker shade on hover */
 }
 
+.transfer-btn {
+    background-color: #007bff; /* Primary blue color */
+    color: white; /* Text color */
+    padding: 10px 15px; /* Match padding with other buttons */
+    border: none; /* No border */
+    border-radius: 6px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.transfer-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+
 
 
 .add-analysis-btn {

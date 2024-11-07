@@ -1,11 +1,35 @@
 .form-container {
-    max-width: 600px; /* Set max width for the form container */
-    margin: 0 auto; /* Center the container */
+    max-width: 600px; /* Control the width of the form */
+    margin: 20px auto; /* Center the form */
     padding: 20px;
-    background-color: #f9f9f9; /* Light background */
-    border: 1px solid #ddd; /* Light border */
+    background-color: #fff; /* White background for contrast */
     border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
+
+.form-group {
+    margin-bottom: 15px; /* Space between fields */
+}
+
+.save-button {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    padding: 10px 15px; /* Padding for button */
+    border: none; /* No border */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.save-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+.error {
+    color: red; /* Red color for error messages */
+    font-size: 0.9em; /* Slightly smaller font */
+}
+
 
 h2 {
     color: #800020; /* Header color */

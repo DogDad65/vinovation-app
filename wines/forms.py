@@ -8,7 +8,7 @@ class WineBatchForm(forms.ModelForm):
             'lot_name', 'category', 'grape_variety', 'volume', 'vineyard',
             'ava', 'vessel', 'status', 'vintage', 'source', 'notes'
         ]
-        # No need to redefine widgets for fields with choices, Django will handle it
+
         widgets = {
             'vessel': forms.Select(),  # Dynamically populated by Vessel instances
         }
@@ -29,3 +29,10 @@ class WineBatchVesselTransferForm(forms.ModelForm):
     class Meta:
         model = WineBatch
         fields = ['vessel']
+        
+class TransferForm(forms.ModelForm):
+    vessel = forms.ModelChoiceField(queryset=Vessel.objects.all(), label="Select Vessel")
+
+    class Meta:
+        model = Vessel  # This can be adjusted based on what you want to transfer
+        fields = ['vessel']  # You can adjust this according to your needs

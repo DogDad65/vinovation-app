@@ -3,13 +3,25 @@
 
 {% load static %}
 
-{% block title %}Add New Vessel{% endblock %}
+{% block title %}
+    {% if vessel %}
+        Edit Vessel: {{ vessel.name }}
+    {% else %}
+        Add New Vessel
+    {% endif %}
+{% endblock %}
 
 {% block content %}
 <link rel="stylesheet" href="{% static 'css/vessel_form.css' %}">
 
 <div class="form-container">
-    <h2>Add New Vessel</h2>
+    <h2>
+        {% if vessel %}
+            Edit Vessel: {{ vessel.name }}
+        {% else %}
+            Add New Vessel
+        {% endif %}
+    </h2>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}

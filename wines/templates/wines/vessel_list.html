@@ -1,3 +1,4 @@
+<!-- In wines/templates/wines/vessel_list.html -->
 {% extends 'wines/base.html' %}
 
 {% block title %}Vessels{% endblock %}
@@ -13,13 +14,13 @@
                 <th>Capacity (L)</th>
                 <th>Material</th>
                 <th>Stored Batches</th>
-                <th>Actions</th>
+                <th>Type of Vessel</th> <!-- Updated column header -->
             </tr>
         </thead>
         <tbody>
             {% for vessel in vessels %}
                 <tr>
-                    <td>{{ vessel.name }}</td>
+                    <td><a href="{% url 'vessel_detail' vessel.id %}">{{ vessel.name }}</a></td>
                     <td>{{ vessel.capacity }}</td>
                     <td>{{ vessel.material }}</td>
                     <td>
@@ -33,11 +34,11 @@
                             <span class="no-batch-text">No wine batches stored</span>
                         {% endif %}
                     </td>
-                    <td class="action-buttons">
-                        <a href="{% url 'vessel_detail' vessel.id %}" class="view-button">View</a>
-                        <a href="{% url 'edit_vessel' vessel.id %}" class="edit-button">Edit</a>
-                        <a href="{% url 'delete_vessel' vessel.id %}" class="delete-button">Delete</a>
-                    </td>
+                    <td>{{ vessel.get_type_display }}</td> <!-- This will show the type of vessel -->
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No vessels available.</td>
                 </tr>
             {% endfor %}
         </tbody>

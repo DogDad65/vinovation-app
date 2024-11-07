@@ -13,17 +13,19 @@
     <p><strong>Vessel #:</strong> {% if wine.vessel %}{{ wine.vessel.name }}{% else %}N/A{% endif %}</p>
 
     <div class="actions">
-        <form action="{% url 'edit_wine' wine.pk %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="edit-btn btn">Edit Wine</button>
-        </form>
+        <a href="{% url 'edit_wine' wine.pk %}" class="edit-btn btn">Edit Wine</a>
         <form action="{% url 'delete_wine' wine.pk %}" method="post" style="display:inline;">
             {% csrf_token %}
             <button type="submit" class="delete-btn btn">Delete Wine</button>
         </form>
+        <form action="{% url 'transfer_to_vessel' wine.pk %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="transfer-btn btn">Transfer</button>
+        </form>
     </div>
+    
 
-    <h2>Analyses</h2>
+    <h2>Analysis</h2>
     <a href="{% url 'add_analysis' wine.pk %}" class="add-analysis-btn btn">Add New Analysis</a>
     
     {% if analyses %}

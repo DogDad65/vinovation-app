@@ -14,6 +14,7 @@ h1, h2 {
     padding: 20px;
 }
 
+
 /* Main content container */
 .container {
     margin-left: 220px;
@@ -158,6 +159,40 @@ h1, h2 {
 .mb-20 {
     margin-bottom: 20px;
 }
+/* Styles for hamburger menu */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.hamburger div {
+    width: 30px;
+    height: 3px;
+    background-color: #333;
+    margin: 3px 0;
+}
+
+.sidebar {
+    display: flex; /* Always show sidebar on larger screens */
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none; /* Hide sidebar by default on smaller screens */
+        flex-direction: column; /* Stack items vertically */
+    }
+    
+    .sidebar.active {
+        display: flex; /* Show sidebar when active */
+    }
+    
+    .hamburger {
+        display: flex; /* Show hamburger menu on small screens */
+    }
+}
+
 
 /* Responsive adjustments */
 @media (max-width: 768px) {

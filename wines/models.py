@@ -42,22 +42,11 @@ VESSEL_TYPES = (
     ('barrel', 'Barrel'),
 )
 
-class Vessel(models.Model):
-    name = models.CharField(max_length=100)
-    capacity = models.IntegerField(help_text="Capacity in liters")
-    type = models.CharField(max_length=10, choices=VESSEL_TYPES, default='tank')
-    material = models.CharField(max_length=50, blank=True, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="vessels")
-    date_added = models.DateField(auto_now_add=True)
-    manufacturer = models.CharField(max_length=100, blank=True, null=True)
-    FERMENTOR_CHOICES = [
-        ('Red', 'Red'),
-        ('White', 'White'),
-    ]
-    fermentor_type = models.CharField(max_length=5, choices=FERMENTOR_CHOICES, default='Red')
-
-    def __str__(self):
-        return f"{self.name} - {self.type.capitalize()} - {self.capacity}L"
+FERMENTOR_CHOICES = (
+    ('Red', 'Red'),
+    ('White', 'White'),
+    ('Sparkling', 'Sparkling'),
+)
 
 class WineBatch(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="wine_batches")
@@ -67,7 +56,7 @@ class WineBatch(models.Model):
     volume = models.DecimalField(max_digits=5, decimal_places=1)
     vineyard = models.CharField(max_length=100, null=True, blank=True)
     ava = models.CharField(max_length=100, null=True, blank=True)
-    vessel = models.ForeignKey(Vessel, on_delete=models.SET_NULL, null=True, blank=True)
+    vessel = models.ForeignKey('Vessel', on_delete=models.SET_NULL, null=True, blank=True)  # Use 'Vessel' as a string for forward declaration
     status = models.CharField(max_length=20, choices=WINE_STATUS, null=True, blank=True)
     vintage = models.IntegerField(null=True, blank=True)
     source = models.CharField(max_length=100, blank=True)
@@ -76,6 +65,23 @@ class WineBatch(models.Model):
     def __str__(self):
         variety = dict(GRAPE_VARIETIES).get(self.grape_variety, self.grape_variety)
         return f"{self.lot_name} ({variety})"
+
+class Vessel(models.Model):
+    name = models.CharField(max_length=100)
+    capacity = models.IntegerField(help_text="Capacity in liters")
+    current_capacity = models.IntegerField(default=0)
+    type = models.CharField(max_length=10, choices=VESSEL_TYPES, default='tank')
+    material = models.CharField(max_length=50, blank=True, null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="vessels")
+    date_added = models.DateField(auto_now_add=True)
+    manufacturer = models.CharField(max_length=100, blank=True, null=True)
+    fermentor_type = models.CharField(max_length=10, choices=FERMENTOR_CHOICES, default='Red')
+    current_wine_batch = models.ForeignKey(WineBatch, null=True, blank=True, on_delete=models.SET_NULL, related_name='current_vessels')
+
+    def __str__(self):
+        return f"{self.name} - {self.type.capitalize()} - {self.capacity}L"
+
+
 
 class Analysis(models.Model):
     wine_batch = models.ForeignKey(WineBatch, on_delete=models.CASCADE, related_name='analyses')

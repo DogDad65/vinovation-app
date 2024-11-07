@@ -5,7 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
 from django.views.generic import TemplateView
 from .models import WineBatch, Vessel, Analysis
-from .forms import WineBatchForm, AnalysisForm, VesselForm, WineBatchVesselTransferForm
+from .forms import WineBatchForm, AnalysisForm, VesselForm, WineBatchVesselTransferForm, TransferForm
 
 # --- Landing and Dashboard Views ---
 
@@ -77,17 +77,19 @@ def wine_detail(request, pk):
 
 @login_required
 def edit_wine(request, pk):
-    wine = get_object_or_404(WineBatch, pk=pk, user=request.user)  # Ensure the wine batch belongs to the user
+    wine = get_object_or_404(WineBatch, pk=pk, user=request.user)  # Ensure the wine belongs to the logged-in user
     if request.method == 'POST':
-        form = WineBatchForm(request.POST, instance=wine)  # Ensure instance is passed here
+        form = WineBatchForm(request.POST, instance=wine)
         if form.is_valid():
             form.save()
             messages.success(request, "Wine batch updated successfully.")
-            return redirect('wine_list')
+            return redirect('wine_detail', pk=wine.pk)  # Redirect to the wine detail page
     else:
-        form = WineBatchForm(instance=wine)  # Ensure instance is passed here for GET requests
-    
+        form = WineBatchForm(instance=wine) 
+
     return render(request, 'wines/edit_wine.html', {'form': form, 'wine': wine})
+
+
 
 
 def delete_wine(request, pk):
@@ -171,28 +173,58 @@ def vessel_detail(request, vessel_id):
     vessel = get_object_or_404(Vessel, id=vessel_id, user=request.user)  # Ensure the vessel belongs to the user
     return render(request, 'wines/vessel_detail.html', {'vessel': vessel})
 
-@login_required
 def edit_vessel(request, vessel_id):
-    vessel = get_object_or_404(Vessel, id=vessel_id, user=request.user)  # Ensure the vessel belongs to the user
+    vessel = get_object_or_404(Vessel, id=vessel_id)
     if request.method == 'POST':
         form = VesselForm(request.POST, instance=vessel)
         if form.is_valid():
             form.save()
-            messages.success(request, "Vessel updated successfully.")
-            return redirect('vessel_list')
+            # Redirect to a success page or the vessel detail view
     else:
         form = VesselForm(instance=vessel)
-    return render(request, 'wines/vessel_form.html', {'form': form})
+    return render(request, 'wines/vessel_form.html', {'form': form, 'vessel': vessel})
+
 
 @login_required
 def transfer_to_vessel(request, wine_id):
-    wine_batch = get_object_or_404(WineBatch, id=wine_id, user=request.user)  # Ensure the wine batch belongs to the user
-    if request.method == 'POST':
-        form = WineBatchVesselTransferForm(request.POST, instance=wine_batch)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Transferred to vessel successfully.")
-            return redirect('wine_detail', wine_id=wine_batch.id)
-    else:
-        form = WineBatchVesselTransferForm(instance=wine_batch)
-    return render(request, 'wines/transfer_to_vessel.html', {'form': form, 'wine_batch': wine_batch})
+    wine_batch = get_object_or_404(WineBatch, id=wine_id)
+    vessels = Vessel.objects.filter(user=request.user)  # Ensure only the user's vessels are shown
+    form = TransferForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        selected_vessel = form.cleaned_data['vessel']
+
+        # Check if the selected vessel is full
+        if selected_vessel.current_capacity + wine_batch.volume > selected_vessel.capacity:
+            messages.error(request, 'Transfer failed: The selected vessel will be overfilled.')
+            return render(request, 'wines/transfer_to_vessel.html', {'form': form, 'wine_batch': wine_batch, 'vessels': vessels})
+
+        # Check if the selected vessel already contains a different lot of wine
+        if selected_vessel.current_wine_batch and selected_vessel.current_wine_batch != wine_batch:
+            messages.error(request, 'Transfer failed: The selected vessel already contains another wine lot.')
+            return render(request, 'wines/transfer_to_vessel.html', {'form': form, 'wine_batch': wine_batch, 'vessels': vessels})
+
+        # If validations pass, proceed with the transfer
+        selected_vessel.current_wine_batch = wine_batch  # Update the current wine batch in the vessel
+        selected_vessel.current_capacity += wine_batch.volume  # Update the current capacity
+        selected_vessel.save()
+
+        # Optionally, update the wine batch status
+        wine_batch.current_vessel = selected_vessel
+        wine_batch.save()
+
+        # Success message and redirection
+        messages.success(request, 'Transfer successful!')
+        return redirect('transfer_success')  # Redirect to the new success page
+
+    return render(request, 'wines/transfer_to_vessel.html', {'form': form, 'wine_batch': wine_batch, 'vessels': vessels})
+
+
+
+
+@login_required
+def success_page(request):
+    return render(request, 'wines/success.html')
+
+
+

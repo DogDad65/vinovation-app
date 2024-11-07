@@ -1,0 +1,10 @@
+<!-- templates/wines/success.html -->
+{% extends "wines/base.html" %}
+
+{% block title %}Transfer Successful{% endblock %}
+
+{% block content %}
+<h1>Transfer Successful!</h1>
+<p>The wine batch has been successfully transferred to the vessel.</p>
+<a href="{% url 'wine_list' %}">Return to Wine List</a>
+{% endblock %}

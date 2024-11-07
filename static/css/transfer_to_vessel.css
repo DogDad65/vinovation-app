@@ -1,0 +1,55 @@
+/* Container for the transfer page */
+.transfer-container {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 600px; /* or whatever matches your design */
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling for transfer title */
+.transfer-header {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: #800020; /* Consistent with other headers */
+    margin-bottom: 20px;
+}
+
+/* Style for form inputs */
+.form-group {
+    margin-bottom: 15px; /* Spacing between form elements */
+}
+
+.btn.transfer-btn {
+    background-color: #800020; /* Dark red, consistent with other buttons */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn.transfer-btn:hover {
+    background-color: #600015; /* Darker shade for hover */
+}
+
+/* Style for form fields */
+input[type="text"],
+input[type="number"],
+select,
+textarea {
+    width: 100%; /* Make form elements full width */
+    padding: 10px; /* Padding for better appearance */
+    border: 1px solid #ccc; /* Border styling */
+    border-radius: 5px; /* Rounded corners */
+    margin-bottom: 15px; /* Space below elements */
+}
+
+/* Error message styling */
+.error-message {
+    color: red; /* Highlight error messages */
+    font-size: 14px;
+}
+
