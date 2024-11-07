@@ -53,17 +53,20 @@ h2 {
 
 
 .edit-btn {
-    background-color: #ffc107; /* Set the edit button color to yellow */
-    color: #333; /* Dark text color for contrast */
-    padding: 10px 15px; /* Padding for a better look */
+    font-size: 16px; /* Adjust font size as needed */
+    font-weight: bold; /* Make the text bold */
+    color: white; /* Change the text color */
+    background-color: #800020; /* Background color for the button */
     border: none; /* Remove border */
-    border-radius: 6px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor */
-    transition: background-color 0.3s ease; /* Smooth transition */
+    padding: 10px 20px; /* Add padding */
+    border-radius: 5px; /* Add border radius for rounded corners */
+    cursor: pointer; /* Change cursor on hover */
+    transition: background-color 0.3s; /* Add transition for hover effect */
+    text-decoration: none; /* Eliminate underline */
 }
 
-.edit-button:hover {
-    background-color: #e0a800; /* Darker yellow on hover */
+.edit-btn:hover {
+    background-color: #e0a800; /* Change background color on hover */
 }
 
 
@@ -103,6 +106,7 @@ h2 {
     text-align: center;
     padding: 10px; /* Add padding for the button */
     border-radius: 6px; /* Rounded corners */
+    text-decoration: none;
 }
 
 .analysis-buttons {
