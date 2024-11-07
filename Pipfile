@@ -4,13 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django = "*"
-python-dotenv = "*"
-whitenoise = "*"
-gunicorn = "*"
-dj-database-url = "*"
-psycopg2-binary = "*"
-psycopg = "*"
+django = ">=3.2,<4.0"
+python-dotenv = ">=0.15,<1.0"
+whitenoise = ">=5.0,<6.0"
+gunicorn = ">=20.0,<21.0"
+dj-database-url = ">=0.5,<1.0"
+psycopg2-binary = ">=2.9,<3.0"
+
+
 
 [dev-packages]
 
