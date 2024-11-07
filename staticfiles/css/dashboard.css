@@ -1,0 +1,113 @@
+/* Overall Dashboard Header */
+h1 {
+    color: #370617; /* Dark burgundy from palette */
+}
+
+/* Styling for the main wine section titles */
+h2 {
+    color: #370617; /* Dark burgundy for section titles */
+}
+
+/* Dashboard layout styling */
+.dashboard-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    margin: 40px auto;
+    max-width: 1200px;
+    padding: 20px;
+}
+
+/* Section styling for red and white wine columns */
+.wine-column {
+    flex: 1;
+    min-width: 300px;
+    padding: 25px 30px;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wine-column:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific styling for Red and White Wine columns */
+.red-column {
+    background-color: #f8d7da; /* Light red background */
+    border-left: 4px solid #9D0208; /* Dark red accent border */
+}
+
+.white-column {
+    background-color: #d6eaf8; /* Light blue background */
+    border-left: 4px solid #6A040F; /* Dark burgundy accent border */
+}
+
+/* Styling for section headers within wine columns */
+.wine-column h2 {
+    font-size: 22px;
+    color: #370617;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #D00000; /* Bold red border for emphasis */
+    padding-bottom: 10px;
+}
+
+/* List styling for wine items */
+.wine-column ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.wine-column li {
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    font-size: 16px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Enhanced "View Details" link styling */
+.wine-column a {
+    color: #FFBA08; /* Warm yellow for links */
+    font-weight: bold;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s;
+}
+
+.wine-column a:hover {
+    color: #FAA307; /* Darker yellow on hover */
+    text-decoration: underline;
+}
+
+.wine-column a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: #FFBA08;
+    transition: width 0.3s;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+}
+
+.wine-column a:hover::after {
+    width: 100%;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+    .dashboard-columns {
+        flex-direction: column;
+    }
+
+    .wine-column {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+}

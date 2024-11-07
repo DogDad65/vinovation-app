@@ -1,0 +1,102 @@
+/* static/css/wine_detail.css */
+
+.wine-details-container {
+    max-width: 600px; /* Set a max-width for the container */
+    margin: 20px auto; /* Center and add top margin */
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+}
+
+.wine-info p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px; /* Add some margin between paragraphs */
+}
+
+h2 {
+    text-align: center;
+    color: #800020;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.analyses-section h3 {
+    color: #800020;
+    font-size: 20px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.analyses-list {
+    margin-top: 15px; /* Space between the heading and analysis list */
+}
+
+.analysis-container {
+    background-color: #f8f9fa; /* Light background for analyses */
+    border: 1px solid #ddd; /* Add border for distinction */
+    border-radius: 6px; /* Rounded corners */
+    padding: 10px; /* Padding inside analysis items */
+    margin-bottom: 15px; /* Space between analyses */
+    display: flex; /* Use flexbox for alignment */
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Center items vertically */
+}
+
+.actions {
+    display: flex; /* Use flexbox for alignment */
+    justify-content: center; /* Center the buttons */
+    gap: 10px; /* Space between the buttons */
+    margin-top: 20px; /* Add some top margin */
+}
+
+
+.edit-btn {
+    background-color: #ffc107; /* Set the edit button color to yellow */
+    color: #333; /* Dark text color for contrast */
+    padding: 10px 15px; /* Padding for a better look */
+    border: none; /* Remove border */
+    border-radius: 6px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.edit-button:hover {
+    background-color: #e0a800; /* Darker yellow on hover */
+}
+
+
+.delete-btn {
+    background-color: #dc3545; /* Red background for delete button */
+    color: #fff; /* Text color */
+    padding: 10px 15px; /* Button padding */
+    border-radius: 6px; /* Rounded corners */
+}
+
+.delete-button:hover {
+    background-color: #c82333; /* Darker shade on hover */
+}
+
+
+
+.add-analysis-btn {
+    display: block;
+    margin-top: 30px;
+    background-color: #ff9800;
+    color: #fff;
+    text-align: center;
+    padding: 10px; /* Add padding for the button */
+    border-radius: 6px; /* Rounded corners */
+}
+
+.analysis-buttons {
+    display: flex; /* Align edit and delete buttons in a row */
+    gap: 10px; /* Space between the buttons */
+    justify-content: flex-end; /* Align buttons to the right */
+}
+
+.analysis-item {
+    font-size: 14px; /* Set a consistent font size for analysis details */
+    color: #555; /* Slightly darker text for analysis details */
+}

@@ -1,0 +1,104 @@
+/* Container for the vessels list page */
+.vessel-container {
+    margin: 40px auto;
+    padding: 20px;
+    max-width: 1000px; /* Wider container to fit the table */
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Header styling for section title */
+.vessel-header {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    color: #800020; /* Darker red from the palette */
+    margin-bottom: 20px;
+}
+
+/* Link styling for adding new vessel */
+.vessel-add-link {
+    display: inline-block;
+    background-color: #ffba08; /* Bright yellow-orange from palette */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    float: left; 
+    font-weight: bold;
+    margin-bottom: auto;
+}
+
+.vessel-add-link:hover {
+    background-color: #e0a800;
+}
+
+/* Table styling */
+.vessel-table {
+    width: 100%;
+    
+    border-collapse: collapse;
+}
+
+.vessel-table th, .vessel-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.vessel-table th {
+    background-color: #f8d7da; /* Light red background for headers */
+    font-weight: bold;
+    color: #800020;
+}
+
+.vessel-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Styling for the "No wine batches stored" text */
+.no-batch-text {
+    color: #999;
+    font-style: italic;
+}
+
+/* Action buttons styling */
+.action-buttons a {
+    display: flex;
+    gap: 10px;
+    margin-right: 5px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Specific styling for each button type */
+.view-button {
+    background-color: #6c757d;
+    color: white;
+}
+
+.edit-button {
+    background-color: #ffc107;
+    color: black;
+}
+
+.delete-button {
+    background-color: #d9534f;
+    color: white;
+}
+
+/* Hover effects for buttons */
+.view-button:hover {
+    background-color: #5a6268;
+}
+
+.edit-button:hover {
+    background-color: #e0a800;
+}
+
+.delete-button:hover {
+    background-color: #c82333;
+}

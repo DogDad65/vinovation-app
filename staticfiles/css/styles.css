@@ -1,0 +1,35 @@
+/* wines/static/css/styles.css */
+.save-button {
+    background-color: #b71c1c; /* Adjust color as needed */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+}
+
+.save-button .material-icons {
+    margin-right: 8px;
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+/* styles.css */
+.landing-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4); /* Overlay */
+    color: #ffffff; /* White text */
+}
+
+.landing-button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
