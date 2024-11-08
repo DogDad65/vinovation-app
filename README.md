@@ -25,8 +25,8 @@ Vinovation is a Django-based web application designed to assist wine producers i
 
 ## Attributions
 - [Django](https://www.djangoproject.com/) - A high-level Python web framework.
-- [Coolers](https://https://coolors.co/palette/780000-c1121f-fdf0d5-003049-669bbc/) - Color generator website.   
-- [Unsplash](https://https://unsplash.com/) - A great resource for exceptional images.
+- [Coolers](https://coolors.co/) - Color generator website.   
+- [Unsplash](https://unsplash.com/) - A great resource for exceptional images.
 
 ## Next Steps
 - **Bottling Data:** Track data related to bottling processes and manage inventory transitions from wine to bottled products.
