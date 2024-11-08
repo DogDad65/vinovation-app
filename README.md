@@ -14,8 +14,8 @@ Vinovation is a Django-based web application designed to assist wine producers i
 - **Analysis Management:** Users can add, edit, and delete analyses related to their wines.
 
 ## Getting Started
-- **Deployed App:** [Vinovation Deployed App](http://link-to-your-deployed-app.com) <!-- Add your deployed app link -->
-- **Planning Materials:** [Vinovation Planning Documents](https://trello.com/b/2zz4eA2x/vinovation) <!-- Add link to your planning materials -->
+- **Deployed App:** [Vinovation Deployed App](https://vinovation-0bd3258bdd05.herokuapp.com/) 
+- **Planning Materials:** [Vinovation Planning Documents](https://trello.com/b/2zz4eA2x/vinovation) 
 
 ## Technologies Used
 - Django
