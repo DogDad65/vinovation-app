@@ -1,6 +1,6 @@
 # Vinovation
 
-![Vinovation Logo](images/vinovation_screenshot.png)  <!-- Replace with your logo or screenshot path -->
+![Vinovation Logo](images/image.png) 
 
 ## Description
 Vinovation is a Django-based web application designed to assist wine producers in managing their wine inventory effectively. With a user-friendly interface, the application allows users to track their wines from reception to bottling, manage vessels, and perform detailed analyses. The project was inspired by extensive experience in the wine production industry, aiming to simplify the daunting task of wine management.
