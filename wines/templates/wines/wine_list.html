@@ -16,6 +16,7 @@
                 <th>Category</th>
                 <th>Variety</th>
                 <th>Vessel</th>
+                <th>Date Created</th> <!-- Ensure this column is for the date_created -->
                 <th>Actions</th> 
             </tr>
         </thead>
@@ -33,13 +34,14 @@
                             N/A
                         {% endif %}
                     </td>
+                    <td>{{ wine.date_created|date:"M d, Y" }}</td> <!-- Fixed to display date_created -->
                     <td>
                         <a href="{% url 'edit_wine' wine.id %}">Edit</a> 
                     </td>
                 </tr>
             {% empty %}
                 <tr>
-                    <td colspan="6">No wine batches available.</td>
+                    <td colspan="7">No wine batches available.</td>
                 </tr>
             {% endfor %}
         </tbody>

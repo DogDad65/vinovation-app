@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError 
+from django.utils.timezone import now
+
 
 # Define choices as tuples for grape varieties, wine categories, wine status, and vessel types
 GRAPE_VARIETIES = (
@@ -56,9 +58,10 @@ class WineBatch(models.Model):
     volume = models.DecimalField(max_digits=5, decimal_places=1)
     vineyard = models.CharField(max_length=100, null=True, blank=True)
     ava = models.CharField(max_length=100, null=True, blank=True)
-    vessel = models.ForeignKey('Vessel', on_delete=models.SET_NULL, null=True, blank=True)  # Use 'Vessel' as a string for forward declaration
+    vessel = models.ForeignKey('Vessel', on_delete=models.SET_NULL, null=True, blank=True)  
     status = models.CharField(max_length=20, choices=WINE_STATUS, null=True, blank=True)
     vintage = models.IntegerField(null=True, blank=True)
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
     source = models.CharField(max_length=100, blank=True)
     notes = models.TextField(blank=True, null=True)
 
@@ -68,18 +71,24 @@ class WineBatch(models.Model):
 
 class Vessel(models.Model):
     name = models.CharField(max_length=100)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="vessels")
     capacity = models.IntegerField(help_text="Capacity in liters")
     current_capacity = models.IntegerField(default=0)
     type = models.CharField(max_length=10, choices=VESSEL_TYPES, default='tank')
     material = models.CharField(max_length=50, blank=True, null=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="vessels")
     date_added = models.DateField(auto_now_add=True)
     manufacturer = models.CharField(max_length=100, blank=True, null=True)
     fermentor_type = models.CharField(max_length=10, choices=FERMENTOR_CHOICES, default='Red')
-    current_wine_batch = models.ForeignKey(WineBatch, null=True, blank=True, on_delete=models.SET_NULL, related_name='current_vessels')
+    current_wine_batch = models.ForeignKey('WineBatch', null=True, blank=True, on_delete=models.SET_NULL, related_name='current_vessels')
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['name', 'user'], name='unique_vessel_per_user')
+        ]
 
     def __str__(self):
         return f"{self.name} - {self.type.capitalize()} - {self.capacity}L"
+
 
 
 

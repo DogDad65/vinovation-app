@@ -24,8 +24,16 @@
     </h2>
     <form method="post">
         {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Save Vessel</button>
+        <table>
+            {{ form.as_table }}
+        </table>
+        {% if form.non_field_errors %}
+            <div class="error">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        <button type="submit">Create Vessel</button>
     </form>
+    
 </div>
 {% endblock %}

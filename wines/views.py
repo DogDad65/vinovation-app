@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.db import IntegrityError
 from django.views.generic import TemplateView
 from .models import WineBatch, Vessel, Analysis
 from .forms import WineBatchForm, AnalysisForm, VesselForm, WineBatchVesselTransferForm, TransferForm
@@ -146,17 +147,20 @@ def vessel_list(request):
 
 @login_required
 def create_vessel(request):
-    if request.method == 'POST':
-        form = VesselForm(request.POST)
+    if request.method == "POST":
+        form = VesselForm(request.POST, user=request.user)  # Pass the current user to the form
         if form.is_valid():
             vessel = form.save(commit=False)
-            vessel.user = request.user  # Assign the logged-in user
+            vessel.user = request.user  # Assign the user to the vessel
             vessel.save()
             messages.success(request, "Vessel created successfully.")
             return redirect('vessel_list')
     else:
-        form = VesselForm()
+        form = VesselForm(user=request.user)  # Pass the user during form initialization
+
     return render(request, 'wines/vessel_form.html', {'form': form})
+
+
 
 @login_required
 def delete_vessel(request, vessel_id):
