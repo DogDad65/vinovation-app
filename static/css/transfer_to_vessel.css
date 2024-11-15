@@ -1,55 +1,65 @@
-/* Container for the transfer page */
+/* static/css/transfer_to_vessel.css */
+
 .transfer-container {
-    margin: 40px auto;
-    padding: 20px;
-    max-width: 600px; /* or whatever matches your design */
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #ffffff;
+    background-color: #f9f9f9;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Header styling for transfer title */
-.transfer-header {
-    font-size: 28px;
-    font-weight: bold;
+.transfer-container h2 {
     text-align: center;
-    color: #800020; /* Consistent with other headers */
-    margin-bottom: 20px;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
 }
 
-/* Style for form inputs */
-.form-group {
-    margin-bottom: 15px; /* Spacing between form elements */
+.transfer-container p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #333;
 }
 
-.btn.transfer-btn {
-    background-color: #800020; /* Dark red, consistent with other buttons */
+.transfer-container .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.transfer-container label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.transfer-container select,
+.transfer-container input[type="checkbox"] {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.transfer-container .btn {
+    display: block;
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    background-color: #ff6f3c;
     color: white;
-    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
 }
 
-.btn.transfer-btn:hover {
-    background-color: #600015; /* Darker shade for hover */
+.transfer-container .btn:hover {
+    background-color: #ff572a;
 }
 
-/* Style for form fields */
-input[type="text"],
-input[type="number"],
-select,
-textarea {
-    width: 100%; /* Make form elements full width */
-    padding: 10px; /* Padding for better appearance */
-    border: 1px solid #ccc; /* Border styling */
-    border-radius: 5px; /* Rounded corners */
-    margin-bottom: 15px; /* Space below elements */
+.messages {
+    margin-bottom: 1rem;
+    color: #4caf50;
+    font-weight: bold;
+    text-align: center;
 }
-
-/* Error message styling */
-.error-message {
-    color: red; /* Highlight error messages */
-    font-size: 14px;
-}
-

@@ -1,22 +1,36 @@
-{% extends 'wines/base.html' %}
-
-{% block title %}Edit {{ wine.lot_name }}{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% load static %} {% block title %}Edit {{
+wine.lot_name }}{% endblock %} {% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/edit.css' %}" />
+{% endblock %} {% block content %}
 <div class="form-container">
-    <h2>Edit Wine Lot: {{ wine.lot_name }}</h2>
-    <form method="post">
-        {% csrf_token %}
-        {% for field in form %}
-            <div class="form-group">
-                {{ field.label }}<br>
-                {{ field }}<br>
-                {% if field.errors %}
-                    <div class="error">{{ field.errors }}</div>  <!-- Display errors for each field -->
-                {% endif %}
-            </div>
-        {% endfor %}
-        <button type="submit" class="save-button">Save Changes</button>
-    </form>
+  <h2>Edit Wine Lot: {{ wine.lot_name }}</h2>
+
+  <!-- Form for Editing Wine Lot -->
+  <form method="post">
+    {% csrf_token %}
+
+    <div class="form-errors">
+      {% if form.non_field_errors %}
+      <div class="error">{{ form.non_field_errors }}</div>
+      {% endif %}
+    </div>
+
+    {% for field in form %}
+    <div class="form-group">
+      {{ field.label }} {{ field }} {% if field.errors %}
+      <div class="error">{{ field.errors }}</div>
+      {% endif %} {% if field.help_text %}
+      <small class="help-text">{{ field.help_text }}</small>
+      {% endif %}
+    </div>
+    {% endfor %}
+    <!-- Add Analysis Link -->
+    <div class="add-analysis-link">
+      <a href="{% url 'add_analysis' wine.id %}" class="add-analysis-button"
+        >Add Analysis</a
+      >
+    </div>
+    <button type="submit" class="save-button">Save Changes</button>
+  </form>
 </div>
 {% endblock %}

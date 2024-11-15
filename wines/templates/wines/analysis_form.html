@@ -1,7 +1,11 @@
-<!-- analysis_form.html -->
-{% extends 'wines/base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Add Analysis{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/analysis_form.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="form-container">
@@ -41,7 +45,7 @@
 
         <div class="form-group">
             <label for="notes">Notes</label>
-            {{ form.notes }}  <!-- New notes field -->
+            {{ form.notes }}
         </div>
 
         <div class="form-actions">

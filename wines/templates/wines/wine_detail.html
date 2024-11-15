@@ -1,6 +1,11 @@
-{% extends 'wines/base.html' %}
+{% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Wine Details{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/wine_detail.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="wine-details-container">
@@ -8,10 +13,12 @@
     <p><strong>Category:</strong> {{ wine.get_category_display }}</p>
     <p><strong>Variety:</strong> {{ wine.get_grape_variety_display }}</p>
     <p><strong>Volume:</strong> {{ wine.volume }} L</p>
-    <p><strong>Vineyard:</strong> {{ wine.vineyard }}</p>
-    <p><strong>AVA:</strong> {{ wine.ava }}</p>
+    <p><strong>Vineyard:</strong> {{ wine.vineyard|default:"N/A" }}</p>
+    <p><strong>AVA:</strong> {{ wine.ava|default:"N/A" }}</p>
     <p><strong>Vessel #:</strong> {% if wine.vessel %}{{ wine.vessel.name }}{% else %}N/A{% endif %}</p>
+    <p><strong>Status:</strong> {{ wine.get_status_display|default:"N/A" }}</p>
 
+    <!-- Actions for wine batch -->
     <div class="actions">
         <a href="{% url 'edit_wine' wine.pk %}" class="edit-btn btn">Edit Wine</a>
         <form action="{% url 'delete_wine' wine.pk %}" method="post" style="display:inline;">
@@ -23,29 +30,31 @@
             <button type="submit" class="transfer-btn btn">Transfer</button>
         </form>
     </div>
-    
 
+    <!-- Analysis Section -->
     <h2>Analysis</h2>
     <a href="{% url 'add_analysis' wine.pk %}" class="add-analysis-btn btn">Add New Analysis</a>
-    
+
     {% if analyses %}
         <div class="analyses-list">
             {% for analysis in analyses %}
                 <div class="analysis-container">
                     <div class="analysis-item">
-                        <strong>Date:</strong> {{ analysis.date }}<br>
+                        <strong>Date:</strong> {{ analysis.date|date:"M d, Y" }}<br>
                         <strong>pH:</strong> {{ analysis.ph }}<br>
                         <strong>TA:</strong> {{ analysis.ta }}<br>
                         <strong>VA:</strong> {{ analysis.va }}<br>
                         <strong>SO₂:</strong> {{ analysis.so2 }}<br>
                         <strong>Brix:</strong> {{ analysis.brix|default:"N/A" }}<br>
-                        <strong>Alcohol (%):</strong> {{ analysis.alcohol|default:"N/A" }}
+                        <strong>Alcohol (%):</strong> {{ analysis.alcohol|default:"N/A" }}<br>
+                        <strong>Frequency:</strong> {{ analysis.frequency|capfirst }}<br>
+                        <strong>Notes:</strong> {{ analysis.notes|default:"N/A" }}
                     </div>
                     <div class="analysis-buttons">
-                        <a href="{% url 'edit_analysis' analysis.pk %}" class="edit-btn">Edit</a>
+                        <a href="{% url 'edit_analysis' analysis.pk %}" class="edit-btn btn">Edit</a>
                         <form action="{% url 'delete_analysis' analysis.pk %}" method="post" style="display:inline;">
                             {% csrf_token %}
-                            <button type="submit" class="delete-btn">Delete</button>
+                            <button type="submit" class="delete-btn btn">Delete</button>
                         </form>
                     </div>
                 </div>

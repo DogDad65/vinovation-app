@@ -1,23 +1,80 @@
-{% extends "wines/base.html" %}
+{% extends 'base.html' %}
+{% load static %} <!-- Ensure this is at the top of the file -->
 
 {% block title %}Vessel Detail{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/vessel_detail.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="vessel-detail-container">
-    <h1>Vessel Detail</h1>
-    <p><strong>Name:</strong> {{ vessel.name }}</p>
-    <p><strong>Type:</strong> {{ vessel.type }}</p>
-    <p><strong>Capacity:</strong> {{ vessel.capacity }} L</p>
-    <p><strong>Material:</strong> {{ vessel.material }}</p>
-    <p><strong>Manufacturer:</strong> {{ vessel.manufacturer }}</p>
-
-    <!-- Edit and Delete buttons -->
-    <div class="vessel-detail-buttons">
+    <h2>Vessel Detail</h2>
+    <div class="vessel-card">
+        <p><strong>Name:</strong> {{ vessel.name }}</p>
+        <p><strong>Type:</strong> {{ vessel.type }}</p>
+        <p><strong>Capacity:</strong> {{ vessel.capacity }} L</p>
+        <p><strong>Material:</strong> {{ vessel.material|default:"N/A" }}</p>
+        <p><strong>Manufacturer:</strong> {{ vessel.manufacturer|default:"N/A" }}</p>
+        <p><strong>Current Lot:</strong> 
+            {% if vessel.current_wine_batch %}
+                <a href="{% url 'wine_detail' vessel.current_wine_batch.id %}">{{ vessel.current_wine_batch.lot_name }}</a>
+            {% else %}
+                None
+            {% endif %}
+        </p>
+        <p><strong>Last Cleaned:</strong> 
+            {% if vessel.last_cleaned_date %}
+                {{ vessel.last_cleaned_date|date:"M d, Y" }}
+            {% else %}
+                Never
+            {% endif %}
+        </p>
+    </div>
+    <div class="vessel-actions">
         <a href="{% url 'edit_vessel' vessel.id %}" class="btn btn-warning">Edit</a>
         <form action="{% url 'delete_vessel' vessel.id %}" method="post" style="display:inline;">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
+        <a href="{% url 'clean_vessel' vessel.id %}" class="btn btn-success">Mark as Cleaned</a>
     </div>
+    <h3>Vessel History</h3>
+    {% if vessel.history.exists %}
+        <table class="vessel-history-table">
+            <thead>
+                <tr>
+                    <th>Wine Batch</th>
+                    <th>Date Transferred In</th>
+                    <th>Date Transferred Out</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in vessel.history.all %}
+                    <tr>
+                        <td>
+                            {% if record.wine_batch %}
+                                <a href="{% url 'wine_detail' record.wine_batch.id %}">{{ record.wine_batch.lot_name }}</a>
+                            {% else %}
+                                None
+                            {% endif %}
+                        </td>
+                        <td>{{ record.date_transferred_in|date:"M d, Y" }}</td>
+                        <td>
+                            {% if record.date_transferred_out %}
+                                {{ record.date_transferred_out|date:"M d, Y" }}
+                            {% else %}
+                                Present
+                            {% endif %}
+                        </td>
+                        <td>{{ record.notes|default:"No notes" }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No history available for this vessel.</p>
+    {% endif %}
 </div>
 {% endblock %}

@@ -1,62 +1,62 @@
-/* General styling for the details page */
 .vessel-detail-container {
     max-width: 600px;
-    margin: 0 auto;
+    margin: 20px auto;
     padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.vessel-detail-container h1 {
-    color: #370617;
-    font-size: 28px;
-    font-weight: 600;
+.vessel-title {
     text-align: center;
     margin-bottom: 20px;
+    color: #8b0000;
+    font-size: 1.8em;
 }
 
-.vessel-detail-container p {
-    font-size: 18px;
-    color: #555;
-    margin: 10px 0;
+.vessel-info p {
+    font-size: 1.1em;
+    margin: 8px 0;
 }
 
-.vessel-detail-container p strong {
-    color: #370617;
-}
-
-.vessel-detail-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.vessel-detail-buttons .btn {
-    padding: 10px 20px;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
+.vessel-info a {
+    color: #0066cc;
     text-decoration: none;
 }
 
-.vessel-detail-buttons .btn-warning {
-    background-color: #FFA307; /* Button color to match the palette */
-    color: #fff;
+.vessel-info a:hover {
+    text-decoration: underline;
+}
+
+.vessel-actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.vessel-actions .btn {
+    margin: 0 5px;
+    padding: 8px 16px;
+    font-size: 1em;
     border: none;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
-.vessel-detail-buttons .btn-warning:hover {
-    background-color: #E85D04;
+.vessel-actions .btn-warning {
+    background-color: #f0ad4e;
+    color: white;
 }
 
-.vessel-detail-buttons .btn-danger {
-    background-color: #D00000;
-    color: #fff;
-    border: none;
+.vessel-actions .btn-warning:hover {
+    background-color: #ec971f;
 }
 
-.vessel-detail-buttons .btn-danger:hover {
-    background-color: #9D0208;
+.vessel-actions .btn-danger {
+    background-color: #d9534f;
+    color: white;
+}
+
+.vessel-actions .btn-danger:hover {
+    background-color: #c9302c;
 }

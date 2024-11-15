@@ -1,4 +1,10 @@
-{% extends 'wines/base.html' %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/edit_analysis.css' %}">
+{% endblock %}
+
 
 {% block title %}Edit Analysis{% endblock %}
 

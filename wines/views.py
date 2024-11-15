@@ -3,9 +3,20 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib import messages
+from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.views.generic import TemplateView
 from .models import WineBatch, Vessel, Analysis
+from django.utils.timezone import now
+
+@login_required
+def clean_vessel(request, vessel_id):
+    vessel = get_object_or_404(Vessel, id=vessel_id, user=request.user)
+    vessel.last_cleaned_date = now()
+    vessel.save()
+    messages.success(request, f"Vessel '{vessel.name}' has been marked as cleaned.")
+    return redirect('vessel_detail', vessel_id=vessel.id)
+
 from .forms import WineBatchForm, AnalysisForm, VesselForm, WineBatchVesselTransferForm, TransferForm
 
 # --- Landing and Dashboard Views ---
@@ -43,32 +54,45 @@ def signup(request):
 # --- Wine Batch Views ---
 @login_required
 def create_wine(request):
-    if request.method == 'POST':
-        form = WineBatchForm(request.POST)
+    if request.method == "POST":
+        form = WineBatchForm(request.POST, user=request.user)
         if form.is_valid():
             wine_batch = form.save(commit=False)
-            wine_batch.user = request.user  # Assign the logged-in user to the wine batch
+            wine_batch.user = request.user
+
+            # Perform conversion based on the selected unit
+            volume = form.cleaned_data['volume']
+            unit = form.cleaned_data['volume_unit']
+
+            if unit == 'gallons':
+                wine_batch.volume = volume * 3.785  # Convert gallons to liters
+            elif unit == 'tons':
+                wine_batch.volume = volume * 1000  # Convert tons to liters
+            else:  # Liters (default metric unit)
+                wine_batch.volume = volume
+
             wine_batch.save()
             messages.success(request, "Wine batch created successfully.")
             return redirect('wine_list')
-        else:
-            # Log form errors to help identify the issue
-            print("Form errors:", form.errors)
-            messages.error(request, "There was an error saving the wine batch. Please check your input.")
     else:
-        form = WineBatchForm()
+        form = WineBatchForm(user=request.user)
 
-    # Fetch vessels belonging to the logged-in user to populate the dropdown
-    vessels = Vessel.objects.filter(user=request.user)  # Only vessels for the logged-in user
-    return render(request, 'wines/wine_form.html', {'form': form, 'vessels': vessels})
-
-
+    return render(request, 'wines/shared_form.html', {
+        'form': form,
+        'title': 'Create Wine Batch',
+        'button_text': 'Save Wine Batch',
+    })
 
 @login_required
 def wine_list(request):
-    # Fetch only the wine batches belonging to the logged-in user
-    wines = WineBatch.objects.filter(user=request.user)  # Filter by user
-    return render(request, 'wines/wine_list.html', {'wines': wines})
+    search_query = request.GET.get('search', '')
+    wine_batches = WineBatch.objects.filter(user=request.user, lot_name__icontains=search_query)
+    paginator = Paginator(wine_batches, 10)  # Paginate the filtered results
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'wines/wine_list.html', {'page_obj': page_obj, 'search_query': search_query})
+
+
 
 @login_required
 def wine_detail(request, pk):
@@ -105,7 +129,7 @@ def delete_wine(request, pk):
 
 @login_required
 def add_analysis(request, wine_id):
-    wine_batch = get_object_or_404(WineBatch, id=wine_id, user=request.user)  # Ensure the wine batch belongs to the user
+    wine_batch = get_object_or_404(WineBatch, id=wine_id, user=request.user)
     if request.method == 'POST':
         form = AnalysisForm(request.POST)
         if form.is_valid():
@@ -113,10 +137,16 @@ def add_analysis(request, wine_id):
             analysis.wine_batch = wine_batch
             analysis.save()
             messages.success(request, "Analysis added successfully.")
-            return redirect('wine_detail', pk=wine_batch.id)  # Use pk instead of wine_id here
+            return redirect('wine_detail', pk=wine_batch.id)
     else:
         form = AnalysisForm()
-    return render(request, 'wines/analysis_form.html', {'form': form, 'wine_batch': wine_batch})
+    
+    return render(request, 'wines/shared_form.html', {
+        'form': form,
+        'title': f"Add Analysis for {wine_batch.lot_name}",
+        'button_text': 'Save Analysis'
+    })
+
 
 def edit_analysis(request, analysis_id):
     analysis = get_object_or_404(Analysis, id=analysis_id)  # Fetch the analysis object
@@ -142,25 +172,44 @@ def delete_analysis(request, analysis_id):
 # --- Vessel Views ---
 @login_required
 def vessel_list(request):
-    vessels = Vessel.objects.filter(user=request.user)  # Fetch only vessels belonging to the logged-in user
-    return render(request, 'wines/vessel_list.html', {'vessels': vessels})
+    vessels_red = Vessel.objects.filter(user=request.user, type='tank', fermentor_type='Red')
+    vessels_white = Vessel.objects.filter(user=request.user, type='tank', fermentor_type='White')
+    vessels_barrels = Vessel.objects.filter(user=request.user, type='barrel')
+    return render(request, 'wines/vessel_list.html', {
+        'vessels_red': vessels_red,
+        'vessels_white': vessels_white,
+        'vessels_barrels': vessels_barrels,
+    })
+
 
 @login_required
 def create_vessel(request):
     if request.method == "POST":
-        form = VesselForm(request.POST, user=request.user)  # Pass the current user to the form
+        form = VesselForm(request.POST, user=request.user)  # Pass user to form
         if form.is_valid():
             vessel = form.save(commit=False)
-            vessel.user = request.user  # Assign the user to the vessel
+            vessel.user = request.user
             vessel.save()
             messages.success(request, "Vessel created successfully.")
             return redirect('vessel_list')
     else:
-        form = VesselForm(user=request.user)  # Pass the user during form initialization
+        form = VesselForm(user=request.user)
 
-    return render(request, 'wines/vessel_form.html', {'form': form})
+    return render(request, 'wines/shared_form.html', {
+        'form': form,
+        'title': 'Create Vessel',
+        'button_text': 'Save Vessel',
+    })
+    
+from django.utils.timezone import now
 
-
+@login_required
+def clean_vessel(request, vessel_id):
+    vessel = get_object_or_404(Vessel, id=vessel_id, user=request.user)
+    vessel.last_cleaned_date = now()
+    vessel.save()
+    messages.success(request, f"Vessel '{vessel.name}' has been marked as cleaned.")
+    return redirect('vessel_detail', vessel_id=vessel.id)
 
 @login_required
 def delete_vessel(request, vessel_id):
@@ -177,52 +226,78 @@ def vessel_detail(request, vessel_id):
     vessel = get_object_or_404(Vessel, id=vessel_id, user=request.user)  # Ensure the vessel belongs to the user
     return render(request, 'wines/vessel_detail.html', {'vessel': vessel})
 
+
+@login_required
 def edit_vessel(request, vessel_id):
-    vessel = get_object_or_404(Vessel, id=vessel_id)
-    if request.method == 'POST':
+    # Fetch the vessel object for the logged-in user
+    vessel = get_object_or_404(Vessel, id=vessel_id, user=request.user)
+    if request.method == "POST":
+        # Bind the submitted data to the VesselForm
         form = VesselForm(request.POST, instance=vessel)
         if form.is_valid():
             form.save()
-            # Redirect to a success page or the vessel detail view
+            messages.success(request, f"Vessel '{vessel.name}' updated successfully.")
+            return redirect('vessel_list')  # Redirect to the vessel list page
     else:
+        # Initialize the form with the current vessel data
         form = VesselForm(instance=vessel)
-    return render(request, 'wines/vessel_form.html', {'form': form, 'vessel': vessel})
 
+    # Render the shared_form template for editing
+    return render(request, 'wines/shared_form.html', {
+        'form': form,
+        'title': f"Edit Vessel: {vessel.name}",
+        'button_text': "Save Changes"
+    })
 
 @login_required
 def transfer_to_vessel(request, wine_id):
-    wine_batch = get_object_or_404(WineBatch, id=wine_id)
-    vessels = Vessel.objects.filter(user=request.user)  # Ensure only the user's vessels are shown
-    form = TransferForm(request.POST or None)
+    wine_batch = get_object_or_404(WineBatch, id=wine_id, user=request.user)
+    vessels = Vessel.objects.filter(user=request.user)
+    
+    # Get the current vessel of the wine batch
+    current_vessel = wine_batch.vessel
 
-    if request.method == 'POST' and form.is_valid():
-        selected_vessel = form.cleaned_data['vessel']
+    if request.method == "POST":
+        form = TransferForm(request.POST, user=request.user)
+        if form.is_valid():
+            selected_vessel = form.cleaned_data['vessel']
 
-        # Check if the selected vessel is full
-        if selected_vessel.current_capacity + wine_batch.volume > selected_vessel.capacity:
-            messages.error(request, 'Transfer failed: The selected vessel will be overfilled.')
-            return render(request, 'wines/transfer_to_vessel.html', {'form': form, 'wine_batch': wine_batch, 'vessels': vessels})
+            # Check if the selected vessel is already occupied
+            if selected_vessel.current_wine_batch and not form.cleaned_data.get('blend_confirmation', False):
+                messages.error(
+                    request,
+                    f"Transfer failed: Vessel '{selected_vessel.name}' is already occupied by '{selected_vessel.current_wine_batch.lot_name}'. "
+                    f"Check 'I intend to blend' if blending is intended."
+                )
+                return render(request, 'wines/transfer_to_vessel.html', {
+                    'form': form,
+                    'wine_batch': wine_batch,
+                    'vessels': vessels,
+                    'current_vessel': current_vessel,  # Pass current vessel
+                })
 
-        # Check if the selected vessel already contains a different lot of wine
-        if selected_vessel.current_wine_batch and selected_vessel.current_wine_batch != wine_batch:
-            messages.error(request, 'Transfer failed: The selected vessel already contains another wine lot.')
-            return render(request, 'wines/transfer_to_vessel.html', {'form': form, 'wine_batch': wine_batch, 'vessels': vessels})
+            # Update the vessel and wine batch
+            selected_vessel.current_wine_batch = wine_batch
+            selected_vessel.current_capacity += wine_batch.volume
+            selected_vessel.save()
 
-        # If validations pass, proceed with the transfer
-        selected_vessel.current_wine_batch = wine_batch  # Update the current wine batch in the vessel
-        selected_vessel.current_capacity += wine_batch.volume  # Update the current capacity
-        selected_vessel.save()
+            wine_batch.vessel = selected_vessel
+            wine_batch.save()
 
-        # Optionally, update the wine batch status
-        wine_batch.current_vessel = selected_vessel
-        wine_batch.save()
+            messages.success(
+                request,
+                f"Wine batch '{wine_batch.lot_name}' successfully transferred to vessel '{selected_vessel.name}'."
+            )
+            return redirect('wine_detail', pk=wine_batch.id)
+    else:
+        form = TransferForm(user=request.user)
 
-        # Success message and redirection
-        messages.success(request, 'Transfer successful!')
-        return redirect('transfer_success')  # Redirect to the new success page
-
-    return render(request, 'wines/transfer_to_vessel.html', {'form': form, 'wine_batch': wine_batch, 'vessels': vessels})
-
+    return render(request, 'wines/transfer_to_vessel.html', {
+        'form': form,
+        'wine_batch': wine_batch,
+        'vessels': vessels,
+        'current_vessel': current_vessel,  # Pass current vessel
+    })
 
 
 

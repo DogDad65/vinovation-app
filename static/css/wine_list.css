@@ -1,138 +1,92 @@
-/* Container for the wine batches list page */
 .wine-container {
-    margin: 40px auto;
-    padding: 20px;
-    max-width: 1000px; /* Maximum width for the container */
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px;
 }
 
-/* Header styling for section title */
 .wine-header {
-    font-size: 28px;
-    font-weight: bold;
     text-align: center;
-    color: #800020; /* Darker red from the palette */
     margin-bottom: 20px;
 }
 
-/* Link styling for adding new wine batch */
-.wine-add-link {
-    display: inline-block;
-    background-color: #ffba08; /* Bright yellow-orange from palette */
+.search-bar {
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.search-bar input {
+    width: 300px;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.search-bar button {
+    padding: 10px 15px;
+    font-size: 1rem;
+    background-color: #4CAF50;
     color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    float: left;
-    font-weight: bold;
-    margin-bottom: 20px; /* Add bottom margin */
+    border: none;
+    cursor: pointer;
 }
 
-.wine-add-link:hover {
-    background-color: #e0a800;
+.search-bar button:hover {
+    background-color: #45a049;
 }
 
-/* Table styling */
 .wine-table {
     width: 100%;
     border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 1rem;
+    text-align: left;
 }
 
 .wine-table th, .wine-table td {
     padding: 12px;
     border: 1px solid #ddd;
-    text-align: left;
-}
-
-.wine-table th {
-    background-color: #f8d7da; /* Light red background for headers */
-    font-weight: bold;
-    color: #800020;
 }
 
 .wine-table tr:nth-child(even) {
     background-color: #f9f9f9;
 }
 
-/* Action buttons styling */
-.action-buttons a {
-    display: inline-block; /* Ensure buttons are inline-block */
-    padding: 10px 15px; /* Consistent padding */
-    border-radius: 5px;
+.wine-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.header-actions {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.wine-add-link {
+    display: inline-block;
+    margin-bottom: 15px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
     text-decoration: none;
+    border-radius: 5px;
+}
+
+.wine-add-link:hover {
+    background-color: #45a049;
+}
+
+.pagination {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.pagination a {
+    color: #007BFF;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+.pagination a:hover {
+    text-decoration: underline;
+}
+
+.pagination .current {
     font-weight: bold;
-    margin-right: 5px; /* Space between buttons */
-}
-
-/* Specific styling for each button type */
-.view-button {
-    background-color: #6c757d;
-    color: white;
-}
-
-.edit-button {
-    background-color: #ffc107;
-    color: black;
-}
-
-.delete-button {
-    background-color: #d9534f;
-    color: white;
-}
-
-.transfer-button {
-    background-color: #17a2b8; /* Cyan for transfer */
-    color: white;
-}
-
-/* Hover effects for buttons */
-.view-button:hover {
-    background-color: #5a6268;
-}
-
-.edit-button:hover {
-    background-color: #e0a800;
-}
-
-.delete-button:hover {
-    background-color: #c82333;
-}
-
-.transfer-button:hover {
-    background-color: #138496; /* Darker cyan on hover */
-}
-
-/* Add this to your wine_list.css or a common CSS file */
-@media (max-width: 768px) {
-    .wine-table {
-        display: block; /* Make the table block */
-        overflow-x: auto; /* Add horizontal scroll */
-    }
-
-    .wine-table thead {
-        display: none; /* Hide headers */
-    }
-
-    .wine-table tr {
-        display: flex; /* Flexbox for rows */
-        flex-direction: column; /* Stack cells */
-        border: 1px solid #ddd; /* Optional: Border for visual separation */
-        margin-bottom: 10px; /* Space between rows */
-    }
-
-    .wine-table td {
-        display: flex; /* Flexbox for cells */
-        justify-content: space-between; /* Space out labels and values */
-        padding: 10px; /* Padding for cells */
-        border-bottom: 1px solid #eee; /* Optional: Bottom border for clarity */
-    }
-
-    /* Optional: Adding labels for each cell */
-    .wine-table td:before {
-        content: attr(data-label); /* Use data-label for responsive labels */
-        font-weight: bold; /* Make labels bold */
-        margin-right: 10px; /* Space between label and value */
-    }
+    margin: 0 5px;
 }

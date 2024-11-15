@@ -1,39 +1,57 @@
-<!-- wines/templates/wines/vessel_form.html -->
-{% extends "wines/base.html" %}
-
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %}
-    {% if vessel %}
-        Edit Vessel: {{ vessel.name }}
+    {% if form_action == 'create' %}
+        Create Vessel
     {% else %}
-        Add New Vessel
+        Edit Vessel: {{ vessel.name }}
     {% endif %}
 {% endblock %}
 
-{% block content %}
-<link rel="stylesheet" href="{% static 'css/vessel_form.css' %}">
+{% block extra_css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/vessel_form.css' %}">
+{% endblock %}
 
+{% block content %}
 <div class="form-container">
     <h2>
-        {% if vessel %}
-            Edit Vessel: {{ vessel.name }}
+        {% if form_action == 'create' %}
+            Create a New Vessel
         {% else %}
-            Add New Vessel
+            Edit Vessel: {{ vessel.name }}
         {% endif %}
     </h2>
+
     <form method="post">
         {% csrf_token %}
-        <table>
-            {{ form.as_table }}
-        </table>
-        {% if form.non_field_errors %}
-            <div class="error">
-                {{ form.non_field_errors }}
+
+        <div class="form-errors">
+            {% if form.non_field_errors %}
+                <div class="error">{{ form.non_field_errors }}</div>
+            {% endif %}
+        </div>
+
+        {% for field in form %}
+            <div class="form-group">
+                {{ field.label }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error">{{ field.errors }}</div>
+                {% endif %}
+                {% if field.help_text %}
+                    <small class="help-text">{{ field.help_text }}</small>
+                {% endif %}
             </div>
-        {% endif %}
-        <button type="submit">Create Vessel</button>
+        {% endfor %}
+
+        <button type="submit" class="save-button">
+            {% if form_action == 'create' %}
+                Create Vessel
+            {% else %}
+                Save Changes
+            {% endif %}
+        </button>
     </form>
-    
 </div>
 {% endblock %}

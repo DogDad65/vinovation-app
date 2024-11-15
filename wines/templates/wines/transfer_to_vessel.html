@@ -1,22 +1,48 @@
-{% extends 'wines/base.html' %}
-{% load custom_filters %}
+{% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Transfer Wine Batch to Vessel{% endblock %}
+{% block title %}Transfer Wine Batch: {{ wine_batch.lot_name }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/transfer_to_vessel.css' %}">
+{% endblock %}
 
 {% block content %}
 <div class="transfer-container">
-    <h1 class="transfer-header">Transfer Wine Batch to Vessel</h1>
+    <h2>Transfer Wine Batch: {{ wine_batch.lot_name }}</h2>
+    <ul class="messages">
+        {% for message in messages %}
+            <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
 
+    <!-- Display the current vessel -->
+    <div class="form-group">
+        <p>
+            Current vessel:
+            {% if current_vessel %}
+                <strong>{{ current_vessel.name }}</strong>
+            {% else %}
+                <strong>Not currently in a vessel</strong>
+            {% endif %}
+        </p>
+    </div>
+
+    <!-- Transfer form -->
     <form method="post">
         {% csrf_token %}
         <div class="form-group">
-            <label for="vessel">Select Vessel:</label>
-            {{ form.vessel|add_class:"form-control" }} <!-- Apply the custom add_class filter -->
-            {% if form.vessel.errors %}
-                <div class="error-message">{{ form.vessel.errors|join:", " }}</div> <!-- Display errors -->
-            {% endif %}
+            <label for="id_vessel">Select Vessel:</label>
+            {{ form.vessel }}
         </div>
-        <button type="submit" class="btn transfer-btn">Transfer</button>
+
+        <div class="form-group">
+            <label for="id_blend_confirmation">
+                {{ form.blend_confirmation }} I intend to blend the wine in the selected vessel.
+            </label>
+        </div>
+
+        <button type="submit" class="btn">Transfer Wine</button>
     </form>
 </div>
 {% endblock %}

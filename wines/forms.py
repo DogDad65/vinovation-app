@@ -3,56 +3,83 @@ from .models import WineBatch, Analysis, Vessel
 from django.core.exceptions import ValidationError
 
 
+# Form for WineBatch
 class WineBatchForm(forms.ModelForm):
     class Meta:
         model = WineBatch
         fields = [
-            'lot_name', 'category', 'grape_variety', 'volume', 'vineyard',
-            'ava', 'vessel', 'status', 'vintage', 'source', 'notes'
+            'lot_name', 'category', 'grape_variety', 'volume', 'vintage',
+            'vessel', 'status', 'source', 'notes', 'vineyard', 'ava'
         ]
 
-        widgets = {
-            'vessel': forms.Select(),  # Dynamically populated by Vessel instances
-        }
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # Extract the user if needed
+        super().__init__(*args, **kwargs)
+        if user:
+            # Customize the vessel queryset for the user
+            self.fields['vessel'].queryset = Vessel.objects.filter(user=user)
 
+# Form for Analysis
 class AnalysisForm(forms.ModelForm):
     class Meta:
         model = Analysis
-        fields = ['ph', 'ta', 'va', 'so2', 'brix', 'alcohol', 'notes']
+        fields = ['date', 'ph', 'ta', 'va', 'so2', 'brix', 'alcohol', 'frequency', 'notes']
 
+# Form for Vessel
 class VesselForm(forms.ModelForm):
     class Meta:
         model = Vessel
-        fields = ['name', 'capacity', 'type', 'material', 'manufacturer', 'fermentor_type', 'current_capacity']
-
+        fields = ['name', 'capacity', 'type', 'material', 'manufacturer', 'fermentor_type', 'current_wine_batch']
+    
     def __init__(self, *args, **kwargs):
-        self.user = kwargs.pop('user', None)  # Accept user as a parameter
+        self.user = kwargs.pop('user', None)  # Pass the user to filter wine batches
         super().__init__(*args, **kwargs)
+        
+        # Filter current wine batch dropdown to show only the user's batches
+        if self.user:
+            self.fields['current_wine_batch'].queryset = WineBatch.objects.filter(user=self.user)
 
-    def clean_name(self):
-        name = self.cleaned_data.get('name')
-
-        # Use the user passed in the form initialization or raise an error if unavailable
-        if not self.user:
-            raise ValidationError("User is required to validate vessel uniqueness.")
-
-        # Check if a vessel with the same name already exists for this user
-        if Vessel.objects.filter(name=name, user=self.user).exists():
-            raise ValidationError(f"A vessel named '{name}' already exists for you.")
-        return name
+        # Add placeholders or default values for form fields, if needed
+        self.fields['current_wine_batch'].required = False
 
 
-
+# Form for WineBatch Vessel Transfer
 class WineBatchVesselTransferForm(forms.ModelForm):
-    vessel = forms.ModelChoiceField(queryset=Vessel.objects.all(), label="Select Vessel")
+    vessel = forms.ModelChoiceField(
+        queryset=Vessel.objects.none(),  # Default to an empty queryset
+        label="Select Vessel",
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
 
     class Meta:
         model = WineBatch
         fields = ['vessel']
-        
-class TransferForm(forms.ModelForm):
-    vessel = forms.ModelChoiceField(queryset=Vessel.objects.all(), label="Select Vessel")
 
-    class Meta:
-        model = Vessel  # This can be adjusted based on what you want to transfer
-        fields = ['vessel']  # You can adjust this according to your needs
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # Extract the user
+        super().__init__(*args, **kwargs)
+        if user:
+            # Populate the queryset with only vessels belonging to the user
+            self.fields['vessel'].queryset = Vessel.objects.filter(user=user)
+
+
+# General Form for Vessel Transfer
+class TransferForm(forms.Form):
+    vessel = forms.ModelChoiceField(
+        queryset=Vessel.objects.none(),
+        label="Select Vessel",
+        widget=forms.Select(attrs={'class': 'form-control'}),
+    )
+    blend_confirmation = forms.BooleanField(
+        required=False,
+        label="I intend to blend the wine in the selected vessel",
+    )
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # Extract the user
+        super().__init__(*args, **kwargs)
+        if user:
+            self.fields['vessel'].queryset = Vessel.objects.filter(user=user)
+
+
+

@@ -65,3 +65,19 @@ select {
 .save-button:hover {
     background-color: #e68900; /* Darker shade on hover */
 }
+
+.add-analysis-button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1em;
+    text-align: center;
+}
+
+.add-analysis-button:hover {
+    background-color: #0056b3;
+}

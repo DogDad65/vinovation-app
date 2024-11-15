@@ -1,0 +1,42 @@
+<!-- shared_form.html -->
+{% extends 'base.html' %}
+{% load static %} <!-- Make sure this line is at the top -->
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/shared_form.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>{{ title }}</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Dynamically render all fields except 'current_wine_batch' -->
+        {% for field in form %}
+            {% if field.name != 'current_wine_batch' %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endfor %}
+
+        <!-- Render the 'current_wine_batch' field explicitly -->
+        <div class="form-group">
+            <label for="id_current_wine_batch">Current Lot:</label>
+            {{ form.current_wine_batch }}
+            {% if form.current_wine_batch.errors %}
+                <div class="error">{{ form.current_wine_batch.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+    </form>
+</div>
+{% endblock %}
