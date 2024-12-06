@@ -1,57 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Vinovation{% endblock %}</title>
-        {% load static %}
-    
-        <!-- Global CSS (shared across all pages) -->
-        <link rel="stylesheet" href="{% static 'css/base.css' %}">
-        <link rel="icon" href="{% static 'favicon.ico' %}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Vinovation{% endblock %}</title>
+    {% load static %}
 
+    <!-- Global CSS (shared across all pages) -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" />
+    <link rel="icon" href="{% static 'favicon.ico' %}" />
 
-        {% block extra_css %}{% endblock %}
-    
-        <!-- Font Awesome for icons -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    </head>
-    
+    {% block extra_css %}{% endblock %}
 
-<body>
+    <!-- Font Awesome for icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      integrity="sha512-Fo3rlrZj/k7ujTnwxVVEXRDgW5iQbsH5XqSDPx2aT0MYu6tQp+Q0xNJ8RlJxj29wKl6H9Q9GHd9Gr+FSvw8zpg=="
+      crossorigin="anonymous"
+    />
+  </head>
+
+  <body>
     {% if request.resolver_match.url_name != 'landing' %}
-    
+
     <!-- Hamburger Menu -->
     <div class="hamburger" id="hamburger">
         <div></div>
         <div></div>
         <div></div>
     </div>
-    
+
     <!-- Sidebar Navigation -->
     <div class="sidebar" id="sidebar">
       <ul class="sidebar-nav">
-          <li><a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-          <li><a href="{% url 'create_wine' %}" class="{% if request.resolver_match.url_name == 'create_wine' %}active{% endif %}"><i class="fas fa-wine-bottle"></i> Create Wine Batch</a></li>
-          <li><a href="{% url 'wine_list' %}" class="{% if request.resolver_match.url_name == 'wine_list' %}active{% endif %}"><i class="fas fa-chart-line"></i> Wine List</a></li>
-          <li><a href="{% url 'vessel_list' %}" class="{% if request.resolver_match.url_name == 'vessel_list' %}active{% endif %}"><i class="fas fa-flask"></i> Vessel</a></li>
-          <li>
-              <form action="{% url 'logout' %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit" class="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</button>
-              </form>
-          </li>
+        <li>
+          <a
+            href="{% url 'dashboard' %}"
+            class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
+            ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+          >
+        </li>
+        <li>
+          <a
+            href="{% url 'create_wine' %}"
+            class="{% if request.resolver_match.url_name == 'create_wine' %}active{% endif %}"
+            ><i class="fas fa-wine-bottle"></i> Create Wine Batch</a
+          >
+        </li>
+        <li>
+          <a
+            href="{% url 'wine_list' %}"
+            class="{% if request.resolver_match.url_name == 'wine_list' %}active{% endif %}"
+            ><i class="fas fa-chart-line"></i> Wine List</a
+          >
+        </li>
+        <li>
+          <a
+            href="{% url 'vessel_list' %}"
+            class="{% if request.resolver_match.url_name == 'vessel_list' %}active{% endif %}"
+            ><i class="fas fa-flask"></i> Vessel</a
+          >
+        </li>
+        <li>
+          <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="logout-button">
+              <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+          </form>
+        </li>
       </ul>
-  </div>
-  
+    </div>
     {% endif %}
 
     <!-- Main container and content area -->
     <div class="container">
-      <main class="content">
-        {% block content %}
-        {% endblock %}
-      </main>
+      <main class="content">{% block content %} {% endblock %}</main>
     </div>
-</body>
+
+    <!-- JavaScript for hamburger menu toggle -->
+    <script>
+      const hamburger = document.getElementById('hamburger');
+      const sidebar = document.getElementById('sidebar');
+
+      hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+      });
+    </script>
+  </body>
 </html>
